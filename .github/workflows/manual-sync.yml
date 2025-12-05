@@ -1,0 +1,118 @@
+name: Manual Changes Sync
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'source.yaml'           # 监听 YAML 源文件变化
+      - 'Clash/*.list'          # 监听规则列表文件变化
+  workflow_dispatch:            # 允许手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  sync-changes:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+      
+      - name: Check what changed
+        id: changes
+        run: |
+          # 检查是否是 source.yaml 变化
+          if git diff --name-only HEAD~1 HEAD | grep -q "source.yaml"; then
+            echo "source_changed=true" >> $GITHUB_OUTPUT
+            echo "📝 检测到 source.yaml 变化"
+          else
+            echo "source_changed=false" >> $GITHUB_OUTPUT
+          fi
+          
+          # 检查是否是 list 文件变化
+          if git diff --name-only HEAD~1 HEAD | grep -q "Clash/.*\.list"; then
+            echo "lists_changed=true" >> $GITHUB_OUTPUT
+            echo "📋 检测到 list 文件变化"
+          else
+            echo "lists_changed=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Regenerate rules from YAML
+        if: steps.changes.outputs.source_changed == 'true'
+        run: |
+          echo "从 source.yaml 重新生成规则文件..."
+          python generate_list_files.py
+      
+      - name: Commit regenerated files
+        if: steps.changes.outputs.source_changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add Clash/*.list
+          
+          if git diff --staged --quiet; then
+            echo "没有生成新的变化"
+          else
+            git commit -m "🔄 根据 source.yaml 更新生成规则列表"
+            git push
+          fi
+      
+      - name: Sync to Gist
+        if: steps.changes.outputs.source_changed == 'true' || steps.changes.outputs.lists_changed == 'true'
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: 128a370090d45e8da2bf3dd2bca2f0e7
+        run: |
+          # 克隆 Gist 仓库
+          git clone https://${GIST_TOKEN}@gist.github.com/${GIST_ID}.git gist-repo
+          
+          # 检查文件是否有变化
+          echo "检查文件变化..."
+          HAS_CHANGES=false
+          
+          for file in Clash/*.list; do
+            filename=$(basename "$file")
+            if [ ! -f "gist-repo/$filename" ]; then
+              echo "  新文件: $filename"
+              HAS_CHANGES=true
+            elif ! cmp -s "$file" "gist-repo/$filename"; then
+              echo "  已更新: $filename"
+              HAS_CHANGES=true
+            else
+              echo "  无变化: $filename"
+            fi
+          done
+          
+          if [ "$HAS_CHANGES" = false ]; then
+            echo "✓ 所有文件内容相同，跳过 Gist 更新"
+            exit 0
+          fi
+          
+          # 复制有变化的文件到 Gist
+          echo "同步到 Gist..."
+          cp Clash/*.list gist-repo/
+          
+          # 提交并推送
+          cd gist-repo
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add *.list
+          
+          if git diff --staged --quiet; then
+            echo "Gist 无需更新"
+          else
+            git commit -m "🔄 Manual update from GitHub: $(date +'%Y-%m-%d %H:%M:%S')"
+            git push
+            echo "✅ 已同步到 Gist"
+          fi
