@@ -85,6 +85,7 @@ jobs:
           # 检查文件是否有变化
           echo "检查文件变化..."
           HAS_CHANGES=false
+          CHANGED_FILES=""
           
           # 检查 .list 文件
           for file in Clash/*.list; do
@@ -92,9 +93,11 @@ jobs:
             if [ ! -f "gist-repo/$filename" ]; then
               echo "  新文件: $filename"
               HAS_CHANGES=true
+              CHANGED_FILES="$CHANGED_FILES $file"
             elif ! cmp -s "$file" "gist-repo/$filename"; then
               echo "  已更新: $filename"
               HAS_CHANGES=true
+              CHANGED_FILES="$CHANGED_FILES $file"
             else
               echo "  无变化: $filename"
             fi
@@ -107,9 +110,11 @@ jobs:
               if [ ! -f "gist-repo/$filename" ]; then
                 echo "  新文件: $filename"
                 HAS_CHANGES=true
+                CHANGED_FILES="$CHANGED_FILES $file"
               elif ! cmp -s "$file" "gist-repo/$filename"; then
                 echo "  已更新: $filename"
                 HAS_CHANGES=true
+                CHANGED_FILES="$CHANGED_FILES $file"
               else
                 echo "  无变化: $filename"
               fi
@@ -121,16 +126,24 @@ jobs:
             exit 0
           fi
           
-          # 复制文件到 Gist
+          # 只复制有变化的文件到 Gist
           echo "同步到 Gist..."
-          cp Clash/*.list gist-repo/
-          [ -f Clash/*.ini ] && cp Clash/*.ini gist-repo/ || true
+          for file in $CHANGED_FILES; do
+            filename=$(basename "$file")
+            echo "  复制: $filename"
+            cp "$file" "gist-repo/$filename"
+          done
           
           # 提交并推送
           cd gist-repo
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git add *.list *.ini
+          
+          # 只添加有变化的文件
+          for file in $CHANGED_FILES; do
+            filename=$(basename "$file")
+            git add "$filename"
+          done
           
           if git diff --staged --quiet; then
             echo "Gist 无需更新"
