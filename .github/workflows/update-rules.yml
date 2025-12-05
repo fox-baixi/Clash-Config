@@ -3,7 +3,7 @@ name: Update Clash Rules
 on:
   schedule:
     # 每天北京时间 8:00 和 20:00 运行 (UTC 0:00 和 12:00)
-    - cron: '0 0,12 * * *'
+    - cron: '0 0 * * 1'
   workflow_dispatch:  # 允许手动触发
 
 permissions:
@@ -78,7 +78,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add *.list source.yaml
+          git add Clash/*.list source.yaml
           
           # 检查是否有变化
           if git diff --staged --quiet; then
