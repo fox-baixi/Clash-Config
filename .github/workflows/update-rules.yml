@@ -87,3 +87,29 @@ jobs:
             git commit -m "🔄 Auto update: $(date +'%Y-%m-%d %H:%M:%S')"
             git push
           fi
+      
+      - name: Sync to Gist
+        if: steps.download.outputs.changed == 'true'
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: 128a370090d45e8da2bf3dd2bca2f0e7
+        run: |
+          # 克隆 Gist 仓库
+          git clone https://${{ secrets.GIST_TOKEN }}@gist.github.com/${{ env.GIST_ID }}.git gist-repo
+          
+          # 复制 list 文件到 Gist
+          cp Clash/*.list gist-repo/
+          
+          # 提交并推送到 Gist
+          cd gist-repo
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add *.list
+          
+          if git diff --staged --quiet; then
+            echo "Gist 无需更新"
+          else
+            git commit -m "🔄 Auto update from GitHub Actions: $(date +'%Y-%m-%d %H:%M:%S')"
+            git push
+            echo "✅ 已同步到 Gist"
+          fi
