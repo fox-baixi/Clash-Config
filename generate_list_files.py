@@ -58,8 +58,8 @@ def write_list_file(file_path, rules, group_name):
 
 def main():
     # 文件路径
-    yaml_file = r'd:\temp\yaml\Rf9b2uwpePdq.yaml'
-    output_dir = r'd:\temp\yaml\hyjs'
+    yaml_file = 'source.yaml'  # GitHub Actions 会下载到当前目录
+    output_dir = '.'  # 直接输出到当前目录
     
     # 代理组与文件名的映射
     group_to_file = {

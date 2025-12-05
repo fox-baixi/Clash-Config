@@ -1,0 +1,53 @@
+name: Update Clash Rules
+
+on:
+  schedule:
+    # 每天北京时间 8:00 和 20:00 运行 (UTC 0:00 和 12:00)
+    - cron: '0 0,12 * * *'
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  update-rules:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整历史以便比对
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          pip install pyyaml requests
+      
+      - name: Download and check YAML
+        id: download
+        run: |
+          python download_yaml.py
+        env:
+          YAML_URL: https://bayoeorescentpossessicoanseparateuneforescenphocommitte.adoptangelaboradvacotionclwonthorughconfrmcompimentdeseertaltar.org/link/0kyzHkFkWbx2jrjq?clash=1
+      
+      - name: Generate list files
+        if: steps.download.outputs.changed == 'true'
+        run: |
+          python generate_list_files.py
+      
+      - name: Commit and push if changed
+        if: steps.download.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add *.list source.yaml
+          
+          # 检查是否有变化
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🔄 Auto update: $(date +'%Y-%m-%d %H:%M:%S')"
+            git push
+          fi
