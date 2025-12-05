@@ -33,20 +33,35 @@ jobs:
       - name: Check what changed
         id: changes
         run: |
-          # 检查是否是 source.yaml 变化
-          if git diff --name-only HEAD~1 HEAD | grep -q "source.yaml"; then
-            echo "source_changed=true" >> $GITHUB_OUTPUT
-            echo "📝 检测到 source.yaml 变化"
-          else
-            echo "source_changed=false" >> $GITHUB_OUTPUT
-          fi
+          # 使用 GitHub event 来检测变化的文件
+          echo "检测到的变化:"
           
-          # 检查是否是 list 文件变化
-          if git diff --name-only HEAD~1 HEAD | grep -q "Clash/.*\.list"; then
-            echo "lists_changed=true" >> $GITHUB_OUTPUT
-            echo "📋 检测到 list 文件变化"
+          # 检查是否 push 事件包含变化
+          if [ "${{ github.event_name }}" = "push" ]; then
+            # 获取 push 中的文件变化（使用 git diff-tree）
+            CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
+            echo "$CHANGED_FILES"
+            
+            # 检查 source.yaml
+            if echo "$CHANGED_FILES" | grep -q "source.yaml"; then
+              echo "source_changed=true" >> $GITHUB_OUTPUT
+              echo "📝 检测到 source.yaml 变化"
+            else
+              echo "source_changed=false" >> $GITHUB_OUTPUT
+            fi
+            
+            # 检查 list 文件
+            if echo "$CHANGED_FILES" | grep -q "Clash/.*\.list"; then
+              echo "lists_changed=true" >> $GITHUB_OUTPUT
+              echo "📋 检测到 list 文件变化"
+            else
+              echo "lists_changed=false" >> $GITHUB_OUTPUT
+            fi
           else
-            echo "lists_changed=false" >> $GITHUB_OUTPUT
+            # 手动触发时，总是同步
+            echo "source_changed=false" >> $GITHUB_OUTPUT
+            echo "lists_changed=true" >> $GITHUB_OUTPUT
+            echo "📌 手动触发，将同步所有文件"
           fi
       
       - name: Regenerate rules from YAML
