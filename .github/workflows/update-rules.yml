@@ -97,7 +97,30 @@ jobs:
           # 克隆 Gist 仓库（使用 token 认证）
           git clone https://${GIST_TOKEN}@gist.github.com/${GIST_ID}.git gist-repo
           
-          # 复制 list 文件到 Gist
+          # 检查文件是否有变化
+          echo "检查文件变化..."
+          HAS_CHANGES=false
+          
+          for file in Clash/*.list; do
+            filename=$(basename "$file")
+            if [ ! -f "gist-repo/$filename" ]; then
+              echo "  新文件: $filename"
+              HAS_CHANGES=true
+            elif ! cmp -s "$file" "gist-repo/$filename"; then
+              echo "  已更新: $filename"
+              HAS_CHANGES=true
+            else
+              echo "  无变化: $filename"
+            fi
+          done
+          
+          if [ "$HAS_CHANGES" = false ]; then
+            echo "✓ 所有文件内容相同，跳过 Gist 更新"
+            exit 0
+          fi
+          
+          # 复制有变化的 list 文件到 Gist
+          echo "复制文件到 Gist..."
           cp Clash/*.list gist-repo/
           
           # 提交并推送到 Gist
