@@ -32,35 +32,25 @@ jobs:
       - name: Check what changed
         id: changes
         run: |
-          # 使用 GitHub event 来检测变化的文件
-          echo "检测到的变化:"
+          echo "📋 检测触发原因..."
           
-          # 检查是否 push 事件包含变化
-          if [ "${{ github.event_name }}" = "push" ]; then
-            # 获取 push 中的文件变化（使用 git diff-tree）
-            CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
-            echo "$CHANGED_FILES"
-            
-            # 检查 source.yaml
-            if echo "$CHANGED_FILES" | grep -q "source.yaml"; then
-              echo "source_changed=true" >> $GITHUB_OUTPUT
-              echo "📝 检测到 source.yaml 变化"
-            else
-              echo "source_changed=false" >> $GITHUB_OUTPUT
-            fi
-            
-            # 检查 list 文件
-            if echo "$CHANGED_FILES" | grep -q "Clash/.*\.list"; then
-              echo "lists_changed=true" >> $GITHUB_OUTPUT
-              echo "📋 检测到 list 文件变化"
-            else
-              echo "lists_changed=false" >> $GITHUB_OUTPUT
-            fi
+          # 因为 workflow 已经通过 paths 过滤触发
+          # 所以触发时一定是 Clash/** 或 source.yaml 有变化
+          
+          # 检查是否存在 source.yaml
+          if [ -f "source.yaml" ]; then
+            echo "source_changed=true" >> $GITHUB_OUTPUT
+            echo "📝 将处理 source.yaml"
           else
-            # 手动触发时，总是同步
             echo "source_changed=false" >> $GITHUB_OUTPUT
-            echo "lists_changed=true" >> $GITHUB_OUTPUT
-            echo "📌 手动触发，将同步所有文件"
+          fi
+          
+          # 检查是否存在 Clash 文件夹
+          if [ -d "Clash" ]; then
+            echo "clash_exists=true" >> $GITHUB_OUTPUT
+            echo "📁 Clash 文件夹存在，将同步到 Gist"
+          else
+            echo "clash_exists=false" >> $GITHUB_OUTPUT
           fi
       
       - name: Regenerate rules from YAML
@@ -84,7 +74,7 @@ jobs:
           fi
       
       - name: Sync to Gist
-        if: steps.changes.outputs.source_changed == 'true' || steps.changes.outputs.lists_changed == 'true'
+        if: steps.changes.outputs.clash_exists == 'true'
         env:
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: 128a370090d45e8da2bf3dd2bca2f0e7
