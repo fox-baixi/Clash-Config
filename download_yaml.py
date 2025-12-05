@@ -30,6 +30,31 @@ def calculate_file_hash(file_path):
             sha256_hash.update(byte_block)
     return sha256_hash.hexdigest()
 
+def calculate_content_hash(file_path):
+    """计算文件内容的 SHA256 哈希值，忽略时间戳行"""
+    if not os.path.exists(file_path):
+        return None
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+        
+        # 过滤掉时间戳行（包含 "上次更新于" 或 "Last updated"）
+        filtered_lines = [
+            line for line in lines 
+            if not re.search(r'上次更新于[:：]|Last updated[:：]|last updated[:：]', line, re.IGNORECASE)
+        ]
+        
+        # 计算过滤后内容的哈希值
+        content = ''.join(filtered_lines)
+        sha256_hash = hashlib.sha256()
+        sha256_hash.update(content.encode('utf-8'))
+        return sha256_hash.hexdigest()
+    except Exception as e:
+        print(f"⚠️ 计算内容哈希时出错: {e}")
+        # 如果出错，回退到计算整个文件的哈希
+        return calculate_file_hash(file_path)
+
 def download_yaml(url, output_path):
     """下载 YAML 文件"""
     try:
@@ -183,22 +208,22 @@ def main():
         set_error_message(errors)
         sys.exit(1)
     
-    # 计算新旧文件的哈希值
-    old_hash = calculate_file_hash(output_file)
-    new_hash = calculate_file_hash(temp_file)
+    # 计算新旧文件的哈希值（忽略时间戳）
+    old_hash = calculate_content_hash(output_file)
+    new_hash = calculate_content_hash(temp_file)
     
-    print(f"\n🔐 哈希值比对:")
+    print(f"\n🔐 内容哈希值比对（忽略时间戳）:")
     print(f"   旧: {old_hash}")
     print(f"   新: {new_hash}")
     
     # 比对是否有变化
     if old_hash == new_hash:
-        print("\n✓ 文件内容未变化，跳过更新")
+        print("\n✓ 文件内容未变化（仅时间戳可能变化），跳过更新")
         os.remove(temp_file)
         set_github_output('changed', 'false')
         set_github_output('status', 'unchanged')
     else:
-        print("\n✓ 检测到文件变化，准备更新")
+        print("\n✓ 检测到实质性内容变化，准备更新")
         # 替换旧文件
         if os.path.exists(output_file):
             os.remove(output_file)
