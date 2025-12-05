@@ -28,12 +28,45 @@ jobs:
         run: |
           pip install pyyaml requests
       
-      - name: Download and check YAML
+      - name: Download and validate YAML
         id: download
         run: |
           python download_yaml.py
-        env:
-          YAML_URL: https://bayoeorescentpossessicoanseparateuneforescenphocommitte.adoptangelaboradvacotionclwonthorughconfrmcompimentdeseertaltar.org/link/0kyzHkFkWbx2jrjq?clash=1
+        continue-on-error: true
+      
+      - name: Send failure notification
+        if: steps.download.outputs.status == 'failed' || steps.download.outputs.status == 'invalid'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: '⚠️ Clash 配置更新失败 - ${{ github.repository }}'
+          to: ${{ secrets.MAIL_TO }}
+          from: GitHub Actions
+          body: |
+            仓库: ${{ github.repository }}
+            时间: ${{ github.event.repository.updated_at }}
+            状态: ${{ steps.download.outputs.status }}
+            
+            错误信息:
+            ${{ steps.download.outputs.error_message }}
+            
+            请检查:
+            1. 订阅链接是否过期
+            2. config.ini 中的 URL 是否正确
+            3. 网络连接是否正常
+            
+            查看详情: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        continue-on-error: true
+      
+      - name: Stop if validation failed
+        if: steps.download.outputs.status == 'failed' || steps.download.outputs.status == 'invalid'
+        run: |
+          echo "YAML 验证失败，停止执行"
+          exit 1
       
       - name: Generate list files
         if: steps.download.outputs.changed == 'true'

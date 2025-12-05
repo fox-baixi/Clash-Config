@@ -65,12 +65,43 @@ GitHub Actions 会在以下情况下自动运行：
 
 ### 修改 YAML 源地址
 
-如果上游地址变化，需要修改 `.github/workflows/update-rules.yml` 文件中的 `YAML_URL` 环境变量：
+**推荐方式**：编辑 `config.ini` 文件（更简单）：
 
-```yaml
-env:
-  YAML_URL: 你的新地址
+```ini
+[source]
+yaml_url = 你的新地址
 ```
+
+**备选方式**：修改 `.github/workflows/update-rules.yml` 文件中的环境变量
+
+### 配置文件说明 (`config.ini`)
+
+```ini
+[source]
+# YAML 下载地址
+yaml_url = 你的订阅地址
+
+[validation]
+# 验证必需字段（逗号分隔）
+required_fields = rules,proxies,proxy-groups
+# 最小规则数量（少于此值视为异常）
+min_rules = 50
+```
+
+### 邮件通知配置
+
+当 YAML 文件下载失败或验证不通过时，系统会发送邮件通知。
+
+**设置步骤**：
+
+1. 在 GitHub 仓库中设置 Secrets（Settings → Secrets and variables → Actions）：
+   - `MAIL_USERNAME`：发件邮箱（如 Gmail）
+   - `MAIL_PASSWORD`：邮箱应用专用密码
+   - `MAIL_TO`：接收通知的邮箱
+
+2. 如果使用 Gmail，需要开启"应用专用密码"
+
+**注意**：如果不配置邮件 Secrets，通知步骤会被跳过，不影响其他功能。
 
 ### 修改更新频率
 
