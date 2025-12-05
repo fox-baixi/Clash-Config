@@ -1,17 +1,20 @@
-# Clash 规则自动更新
+# Clash 规则自动更新与同步
 
-这个仓库自动从上游源获取 Clash 配置文件，并生成对应的规则列表文件。
+这个仓库自动从上游源获取 Clash 配置文件，生成规则列表文件，并同步到 GitHub Gist 以便公开访问。
 
 ## 📋 功能特点
 
-- ✨ **自动更新**：每天自动检查上游 YAML 文件是否有更新
-- 🔍 **智能比对**：仅在文件内容变化时才执行更新
-- 📦 **规则分类**：自动将规则按代理组分类生成独立的 list 文件
+- ✨ **自动更新**：每周一自动检查上游 YAML 文件是否有更新
+- 🧠 **智能比对**：忽略时间戳变化，仅在实质内容变化时才执行更新
+- � **Gist 同步**：自动将生成的规则文件同步到 GitHub Gist
+- �📦 **规则分类**：自动将规则按代理组分类生成独立的 list 文件
 - 🤖 **全自动化**：使用 GitHub Actions 完全自动化，无需手动干预
+- ✅ **完整性验证**：下载后验证 YAML 文件的有效性和完整性
+- 📧 **邮件通知**：当更新失败时发送邮件通知
 
 ## 📁 文件说明
 
-### 规则列表文件
+### 规则列表文件 (Clash/)
 
 - `Proxy.list` - 🔰国外流量规则
 - `Telegram.list` - ✈️Telegram 规则
@@ -21,6 +24,7 @@
 - `Media.list` - 🎬国外媒体规则
 - `Apple.list` - 🍎苹果服务规则
 - `Direct.list` - 直连规则
+- `ACL4SS_Pro.ini` - ACL4SS 配置文件
 
 ### 源文件
 
@@ -28,19 +32,41 @@
 
 ### 脚本文件
 
+- `download_yaml.py` - 下载、验证并智能比对 YAML 文件
 - `generate_list_files.py` - 从 YAML 提取规则并生成 list 文件
-- `download_yaml.py` - 下载并比对 YAML 文件的脚本
 
 ## 🚀 使用方法
 
 ### 自动更新
 
-GitHub Actions 会在以下情况下自动运行：
+仓库包含两个 GitHub Actions 工作流：
 
-- 每天北京时间 08:00 和 20:00
-- 手动触发（在 Actions 页面点击 "Run workflow"）
+#### 1. **Update Clash Rules** (`update-rules.yml`)
+- **触发时机**：
+  - 每周一北京时间 8:00（UTC 0:00）
+  - 手动触发
+- **功能**：
+  - 下载并验证 YAML 文件
+  - 智能比对（忽略时间戳，只检测实质内容变化）
+  - 生成规则列表文件
+  - 提交到 GitHub 仓库
+  - 失败时发送邮件通知
 
-### 手动运行
+#### 2. **Gist Changes Sync** (`gist-Changes-Sync.yml`)
+- **触发时机**：
+  - 当 `Clash/` 文件夹或 `source.yaml` 被推送到 main 分支时
+  - 手动触发
+- **功能**：
+  - 检测文件变化
+  - 如果 `source.yaml` 变化，重新生成规则文件
+  - 将所有 `.list` 和 `.ini` 文件同步到 Gist
+  - 使用内容比对，避免不必要的 Gist 更新
+
+### 手动触发
+
+在 GitHub 仓库的 **Actions** 页面，选择对应的 workflow，点击 **"Run workflow"** 按钮。
+
+### 本地运行
 
 如果需要在本地运行脚本：
 
@@ -65,14 +91,12 @@ GitHub Actions 会在以下情况下自动运行：
 
 ### 修改 YAML 源地址
 
-**推荐方式**：编辑 `config.ini` 文件（更简单）：
+编辑 `config.ini` 文件：
 
 ```ini
 [source]
-yaml_url = 你的新地址
+yaml_url = 你的新订阅地址
 ```
-
-**备选方式**：修改 `.github/workflows/update-rules.yml` 文件中的环境变量
 
 ### 配置文件说明 (`config.ini`)
 
@@ -86,6 +110,22 @@ yaml_url = 你的订阅地址
 required_fields = rules,proxies,proxy-groups
 # 最小规则数量（少于此值视为异常）
 min_rules = 50
+```
+
+### Gist 同步配置
+
+需要在 GitHub 仓库中设置 Secret：
+
+1. 前往 **Settings → Secrets and variables → Actions**
+2. 添加 Secret：
+   - Name: `GIST_TOKEN`
+   - Value: 你的 GitHub Personal Access Token（需要 `gist` 权限）
+
+修改目标 Gist ID（在 `gist-Changes-Sync.yml` 中）：
+
+```yaml
+env:
+  GIST_ID: 你的Gist ID
 ```
 
 ### 邮件通知配置
@@ -109,22 +149,64 @@ min_rules = 50
 
 ```yaml
 schedule:
-  - cron: '0 0,12 * * *'  # 修改这里
+  # 每周一北京时间 8:00 运行
+  - cron: '0 0 * * 1'
+  
+  # 如果需要每天运行两次（早晚各一次）：
+  # - cron: '0 0,12 * * *'  # 北京时间 8:00 和 20:00
+  
+  # 如果需要每天运行一次：
+  # - cron: '0 0 * * *'  # 北京时间 8:00
 ```
 
 ## 📊 工作流程
 
+### 自动更新流程
+
 ```
-下载 YAML → 比对哈希值 → 发现变化？
-                           ↓
-                          是
-                           ↓
-              生成 list 文件 → 提交到 GitHub
+定时触发 → 下载 YAML → 验证完整性 → 内容比对（忽略时间戳）
+                                              ↓
+                                          发现变化？
+                                              ↓
+                                             是
+                                              ↓
+                            生成 list 文件 → 提交到 GitHub
+                                              ↓
+                                    触发 Gist 同步工作流
+                                              ↓
+                                      同步到 GitHub Gist
+```
+
+### 智能比对机制
+
+**内容哈希计算**：
+- 读取整个文件的所有行
+- 过滤掉包含"上次更新于"或"Last updated"的时间戳行
+- 对剩余内容计算 SHA256 哈希值
+- 只在实质内容变化时触发更新
+
+**优势**：
+- ✅ 避免因时间戳更新导致的不必要提交
+- ✅ 减少 Git 历史噪音
+- ✅ 节省 GitHub Actions 运行时间
+- ✅ 降低 Gist 同步频率
+
+## 🔗 访问规则文件
+
+规则文件同步到 Gist 后，可以通过以下格式访问：
+
+```
+https://gist.githubusercontent.com/用户名/Gist-ID/raw/文件名
+```
+
+例如：
+```
+https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Proxy.list
 ```
 
 ## 📝 更新日志
 
-所有自动更新都会以 commit 的形式记录在 Git 历史中，commit 信息包含更新时间。
+所有自动更新都会以 commit 的形式记录在 Git 历史中，commit 信息包含更新时间和类型。
 
 ## 📄 许可证
 

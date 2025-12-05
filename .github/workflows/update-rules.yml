@@ -2,7 +2,7 @@ name: Update Clash Rules
 
 on:
   schedule:
-    # 每天北京时间 8:00 和 20:00 运行 (UTC 0:00 和 12:00)
+    # 每周一北京时间 8:00 运行 (UTC 0:00)
     - cron: '0 0 * * 1'
   workflow_dispatch:  # 允许手动触发
 
