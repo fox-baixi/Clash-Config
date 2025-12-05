@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write  # 允许写入仓库内容
+  actions: write   # 允许启用/禁用 workflow
 
 jobs:
   update-rules:
@@ -62,6 +63,15 @@ jobs:
             查看详情: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         continue-on-error: true
       
+      - name: Disable workflow on failure
+        if: steps.download.outputs.status == 'failed' || steps.download.outputs.status == 'invalid'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow disable update-rules.yml -R ${{ github.repository }}
+          echo "⚠️ Workflow 已禁用，需要手动运行成功后才会重新启用"
+        continue-on-error: true
+      
       - name: Stop if validation failed
         if: steps.download.outputs.status == 'failed' || steps.download.outputs.status == 'invalid'
         run: |
@@ -88,3 +98,11 @@ jobs:
             git push
             echo "✅ 已提交到 GitHub（manual-sync.yml 将自动同步到 Gist）"
           fi
+      
+      - name: Re-enable workflow after manual success
+        if: github.event_name == 'workflow_dispatch' && (steps.download.outputs.status == 'success' || steps.download.outputs.status == 'unchanged')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow enable update-rules.yml -R ${{ github.repository }}
+          echo "✅ Workflow 已重新启用，定时任务将恢复运行"
