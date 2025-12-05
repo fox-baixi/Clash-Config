@@ -5,9 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'source.yaml'           # 监听 YAML 源文件变化
-      - 'Clash/*.list'          # 监听规则列表文件变化
-      - 'Clash/*.ini'           # 监听配置文件变化
+      - 'Clash/**'              # Clash 文件夹下任何文件变化都触发
+      - 'source.yaml'           # YAML 源文件变化也触发
   workflow_dispatch:            # 允许手动触发
 
 permissions:
