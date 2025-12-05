@@ -94,8 +94,8 @@ jobs:
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: 128a370090d45e8da2bf3dd2bca2f0e7
         run: |
-          # 克隆 Gist 仓库
-          git clone https://${{ secrets.GIST_TOKEN }}@gist.github.com/${{ env.GIST_ID }}.git gist-repo
+          # 克隆 Gist 仓库（使用 token 认证）
+          git clone https://${GIST_TOKEN}@gist.github.com/${GIST_ID}.git gist-repo
           
           # 复制 list 文件到 Gist
           cp Clash/*.list gist-repo/
