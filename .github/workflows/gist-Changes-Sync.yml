@@ -1,4 +1,4 @@
-name: Manual Changes Sync
+name: gist Changes Sync
 
 on:
   push:
