@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'Clash/**'              # Clash 文件夹下任何文件变化都触发
-      - 'source.yaml'           # YAML 源文件变化也触发
   workflow_dispatch:            # 允许手动触发
 
 permissions:
@@ -20,61 +19,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      
-      - name: Install dependencies
+      - name: Check Clash folder
+        id: check
         run: |
-          pip install pyyaml
-      
-      - name: Check what changed
-        id: changes
-        run: |
-          echo "📋 检测触发原因..."
-          
-          # 因为 workflow 已经通过 paths 过滤触发
-          # 所以触发时一定是 Clash/** 或 source.yaml 有变化
-          
-          # 检查是否存在 source.yaml
-          if [ -f "source.yaml" ]; then
-            echo "source_changed=true" >> $GITHUB_OUTPUT
-            echo "📝 将处理 source.yaml"
-          else
-            echo "source_changed=false" >> $GITHUB_OUTPUT
-          fi
-          
-          # 检查是否存在 Clash 文件夹
           if [ -d "Clash" ]; then
-            echo "clash_exists=true" >> $GITHUB_OUTPUT
-            echo "📁 Clash 文件夹存在，将同步到 Gist"
+            echo "📁 检测到 Clash 文件夹变化，准备同步到 Gist"
           else
-            echo "clash_exists=false" >> $GITHUB_OUTPUT
-          fi
-      
-      - name: Regenerate rules from YAML
-        if: steps.changes.outputs.source_changed == 'true'
-        run: |
-          echo "从 source.yaml 重新生成规则文件..."
-          python generate_list_files.py
-      
-      - name: Commit regenerated files
-        if: steps.changes.outputs.source_changed == 'true'
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add Clash/*.list
-          
-          if git diff --staged --quiet; then
-            echo "没有生成新的变化"
-          else
-            git commit -m "🔄 根据 source.yaml 更新生成规则列表"
-            git push
+            echo "❌ Clash 文件夹不存在"
+            exit 1
           fi
       
       - name: Sync to Gist
-        if: steps.changes.outputs.clash_exists == 'true'
         env:
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: 128a370090d45e8da2bf3dd2bca2f0e7
