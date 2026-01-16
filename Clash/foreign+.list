@@ -22,6 +22,9 @@ DOMAIN-SUFFIX,discord.com
 DOMAIN-SUFFIX,linux.do
 DOMAIN-SUFFIX,uuppi.com
 
+# 淘宝api
+DOMAIN-SUFFIX,vectorengine.ai
+
 # steam
 # DOMAIN-SUFFIX,steamstatic.com
 # DOMAIN-SUFFIX,fastly.steamstatic.com
