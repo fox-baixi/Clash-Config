@@ -2,20 +2,17 @@
 # 手动维护的额外规则
 
 DOMAIN-SUFFIX,bangumi.moe
-DOMAIN-SUFFIX,blog.reimu.net
-DOMAIN-SUFFIX,csff-wiki.uuppi.com
+DOMAIN-SUFFIX,reimu.net
 DOMAIN-SUFFIX,greasyfork.org
 DOMAIN-SUFFIX,hanime1.me
 DOMAIN-SUFFIX,hax.co.id
 DOMAIN-SUFFIX,huggingface.co
-DOMAIN-SUFFIX,i.pximg.net
+DOMAIN-SUFFIX,pximg.net
 DOMAIN-SUFFIX,mypikpak.com
 DOMAIN-SUFFIX,povn.cc
-DOMAIN-SUFFIX,pximg.net
-DOMAIN-SUFFIX,s.pximg.net
 DOMAIN-SUFFIX,tsv.povn.top
-DOMAIN-SUFFIX,www.reddit.com
-DOMAIN-SUFFIX,www.redditstatic.com
+DOMAIN-SUFFIX,reddit.com
+DOMAIN-SUFFIX,redditstatic.com
 DOMAIN-SUFFIX,x.com
 DOMAIN-SUFFIX,很有精神.com
 DOMAIN-SUFFIX,discord.com
