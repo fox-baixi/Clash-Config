@@ -1,0 +1,4 @@
+﻿# ⛔️广告拦截 扩展规则
+# 手动维护的额外规则
+
+DOMAIN-SUFFIX,nie.netease.com

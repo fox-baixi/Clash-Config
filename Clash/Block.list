@@ -1,4 +1,7 @@
-﻿DOMAIN-SUFFIX,1q2w3.fun
+﻿# ⛔️广告拦截 规则集
+# 从 YAML 文件自动生成
+
+DOMAIN-SUFFIX,1q2w3.fun
 DOMAIN-SUFFIX,abc.pema.cl
 DOMAIN-SUFFIX,acbp0020171456.page.tl
 DOMAIN-SUFFIX,ad-miner.com
