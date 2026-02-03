@@ -24,3 +24,8 @@ DOMAIN-SUFFIX,nodeseek.com
 # steam
 # DOMAIN-SUFFIX,steamstatic.com
 # DOMAIN-SUFFIX,fastly.steamstatic.com
+
+# ai
+DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,api.nvidia.com
