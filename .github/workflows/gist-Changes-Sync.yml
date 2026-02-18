@@ -75,6 +75,24 @@ jobs:
               fi
             fi
           done
+
+          # 检查 .yaml 文件
+          for file in Clash/*.yaml; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file")
+              if [ ! -f "gist-repo/$filename" ]; then
+                echo "  新文件: $filename"
+                HAS_CHANGES=true
+                CHANGED_FILES="$CHANGED_FILES $file"
+              elif ! cmp -s "$file" "gist-repo/$filename"; then
+                echo "  已更新: $filename"
+                HAS_CHANGES=true
+                CHANGED_FILES="$CHANGED_FILES $file"
+              else
+                echo "  无变化: $filename"
+              fi
+            fi
+          done
           
           if [ "$HAS_CHANGES" = false ]; then
             echo "✓ 所有文件内容相同，跳过 Gist 更新"
