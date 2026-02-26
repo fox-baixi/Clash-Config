@@ -15,6 +15,7 @@ proxy-groups:
     type: url-test
     url: http://cp.cloudflare.com/generate_204
     interval: 300
+    tolerance: 30
     include-all: true
     filter: ".*"
 
