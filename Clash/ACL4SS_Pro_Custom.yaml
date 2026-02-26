@@ -22,6 +22,7 @@ proxy-groups:
     type: select
     proxies:
       - 🚀直接连接
+      - ♻️自动选择
       - 🔰国外流量
     include-all: true
     filter: ".*"
@@ -30,6 +31,7 @@ proxy-groups:
     type: select
     proxies:
       - 🔰国外流量
+      - ♻️自动选择
       - 🚀直接连接
     include-all: true
     filter: ".*"
@@ -38,6 +40,7 @@ proxy-groups:
     type: select
     proxies:
       - 🔰国外流量
+      - ♻️自动选择
       - 🚀直接连接
     include-all: true
     filter: ".*"
@@ -46,18 +49,21 @@ proxy-groups:
     type: select
     proxies:
       - 🚀直接连接
+      - ♻️自动选择
       - 🔰国外流量
 
   - name: 🌍主流媒体
     type: select
     proxies:
       - 🔰国外流量
+      - ♻️自动选择
       - 🚀直接连接
 
   - name: 🍎苹果服务
     type: select
     proxies:
       - 🚀直接连接
+      - ♻️自动选择
       - 🔰国外流量
 
   - name: ⛔️广告拦截
