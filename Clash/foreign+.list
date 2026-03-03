@@ -29,3 +29,7 @@ DOMAIN-SUFFIX,nodeseek.com
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,chatgpt.com
 DOMAIN-SUFFIX,api.nvidia.com
+
+# 淘宝APT
+DOMAIN-SUFFIX,vectorengine.ai
+DOMAIN-SUFFIX,apiplus.org
