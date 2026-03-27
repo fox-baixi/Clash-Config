@@ -96,6 +96,19 @@ jobs:
             fi
           done
           
+          # 检查已被删除的文件 (反向比对)
+          DELETED_FILES=""
+          for file in gist-repo/*.list gist-repo/*.ini gist-repo/*.yaml; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file")
+              if [ ! -f "Clash/$filename" ]; then
+                echo "  已删除文件: $filename"
+                HAS_CHANGES=true
+                DELETED_FILES="$DELETED_FILES $filename"
+              fi
+            fi
+          done
+
           if [ "$HAS_CHANGES" = false ]; then
             echo "✓ 所有文件内容相同，跳过 Gist 更新"
             exit 0
@@ -111,6 +124,13 @@ jobs:
           
           # 提交并推送
           cd gist-repo
+          
+          # 处理 Gist 中需要被同步移除的文件
+          for filename in $DELETED_FILES; do
+            echo "  移除: $filename"
+            git rm -f "$filename"
+          done
+
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           
