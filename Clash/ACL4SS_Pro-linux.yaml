@@ -2,6 +2,16 @@
 # 已将 ACL4SSR INI 转换为 Clash.Meta (Mihomo) YAML 格式
 # 对应你的 INI 配置逻辑
 
+dns:
+  enable: true
+  enhanced-mode: fake-ip  # 必须改为这个
+  listen: 0.0.0.0:53      # 监听 53 端口
+  nameserver:
+    - 223.5.5.5
+    - 8.8.8.8
+    - 2400:3200::1
+    - 2001:4860:4860::8888
+
 proxy-groups:
   - name: 🔰国外流量
     type: select

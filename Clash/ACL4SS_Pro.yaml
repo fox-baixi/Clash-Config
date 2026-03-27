@@ -1,0 +1,188 @@
+
+# 已将 ACL4SSR INI 转换为 Clash.Meta (Mihomo) YAML 格式
+# 对应你的 INI 配置逻辑
+
+
+proxy-groups:
+  - name: 🔰国外流量
+    type: select
+    proxies:
+      - ♻️自动选择
+    # 这里的 filter 对应 INI 中的 .* 正则，意为选中所有节点
+    include-all: true
+    filter: ".*"
+
+  - name: ♻️自动选择
+    type: url-test
+    url: http://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 30
+    include-all: true
+    filter: ".*"
+
+  - name: ⚓️其他流量
+    type: select
+    proxies:
+      - 🚀直接连接
+      - ♻️自动选择
+      - 🔰国外流量
+    include-all: true
+    filter: ".*"
+
+  - name: ✈️Telegram
+    type: select
+    proxies:
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🚀直接连接
+    include-all: true
+    filter: ".*"
+
+  - name: 🎥Netflix
+    type: select
+    proxies:
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🚀直接连接
+    include-all: true
+    filter: ".*"
+
+  - name: 🎬国内媒体
+    type: select
+    proxies:
+      - 🚀直接连接
+      - ♻️自动选择
+      - 🔰国外流量
+
+  - name: 🌍主流媒体
+    type: select
+    proxies:
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🚀直接连接
+
+  - name: 🍎苹果服务
+    type: select
+    proxies:
+      - 🚀直接连接
+      - ♻️自动选择
+      - 🔰国外流量
+
+  - name: ⛔️广告拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: 🚀直接连接
+    type: select
+    proxies:
+      - DIRECT
+
+# 规则集提供者 (对应 INI 中的 ruleset URL)
+# ⚠️ 注意: 由于源文件是纯文本列表格式，需要 Clash Meta (Mihomo) 内核支持
+# ⚠️ 已添加 format: text 并在 URL 前增加 ghproxy.net 加速
+rule-providers:
+  Block:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Block.list"
+    path: ./ruleset/Block.yaml
+    interval: 86400
+
+  BlockPlus:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Block+.list"
+    path: ./ruleset/BlockPlus.yaml
+    interval: 86400
+
+  Foreign:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/foreign.list"
+    path: ./ruleset/Foreign.yaml
+    interval: 86400
+
+  ForeignPlus:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/foreign+.list"
+    path: ./ruleset/ForeignPlus.yaml
+    interval: 86400
+
+  Youtube:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Youtube.list"
+    path: ./ruleset/Youtube.yaml
+    interval: 86400
+
+  LocalDownload:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Local_Download.list"
+    path: ./ruleset/LocalDownload.yaml
+    interval: 86400
+    
+  DirectList:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Direct.list"
+    path: ./ruleset/Direct.yaml
+    interval: 86400
+
+  DirectPlus:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Direct+.list"
+    path: ./ruleset/DirectPlus.yaml
+    interval: 86400
+
+# 规则 (对应 INI 中的 ruleset 顺序)
+rules:
+  # 广告拦截
+  - GEOIP,ad,⛔️广告拦截
+  - GEOSITE,category-ads-all,⛔️广告拦截
+  - RULE-SET,Block,⛔️广告拦截
+  - RULE-SET,BlockPlus,⛔️广告拦截
+  
+  # 国外流量
+  - RULE-SET,Foreign,🔰国外流量
+  - RULE-SET,ForeignPlus,🔰国外流量
+  
+  # Telegram
+  - GEOIP,telegram,✈️Telegram
+  - GEOSITE,telegram,✈️Telegram
+  
+  # Netflix
+  - GEOIP,netflix,🎥Netflix
+  - GEOSITE,netflix,🎥Netflix
+  
+  # 国内媒体
+  - GEOSITE,category-media-cn,🎬国内媒体
+  
+  # 主流媒体 (Youtube等)
+  - RULE-SET,Youtube,🌍主流媒体
+  - GEOSITE,category-media,🌍主流媒体
+  
+  # 苹果服务
+  - GEOSITE,apple,🍎苹果服务
+  
+  # 直接连接
+  - GEOIP,CN,🚀直接连接
+  - RULE-SET,LocalDownload,🚀直接连接
+  - GEOSITE,CN,🚀直接连接
+  - RULE-SET,DirectList,🚀直接连接
+  - RULE-SET,DirectPlus,🚀直接连接
+  
+  # 兜底规则
+  - MATCH,⚓️其他流量
