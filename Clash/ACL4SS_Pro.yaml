@@ -91,7 +91,7 @@ dns:
   fake-ip-filter:
     - 'geosite:cn'
     - 'geosite:apple'
-    - '+.argotunnel.com'
+    - 'region2.v2.argotunnel.com'
 
   nameserver:
     - https://dns.alidns.com/dns-query
@@ -105,7 +105,7 @@ dns:
       - https://dns.alidns.com/dns-query
     'geosite:apple':
       - https://dns.alidns.com/dns-query
-    '+.argotunnel.com':
+    'region2.v2.argotunnel.com':
       - https://dns.google/dns-query
 ### DNS 配置结束 ###
 
