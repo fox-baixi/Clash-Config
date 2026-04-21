@@ -78,6 +78,34 @@ proxy-groups:
     type: select
     proxies:
       - DIRECT
+### DNS 配置开始 (若网络异常，删除此段即可) ###
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  listen: 0.0.0.0:1053
+
+  # 1. 核心白名单：在这个列表里的域名【返回真实 IP】，不走 Fake-IP
+  fake-ip-filter:
+    - "rule-set:DirectList"
+    - "rule-set:DirectPlus"
+    - "geosite:cn"
+    - "geosite:apple"
+
+  # 2. 基础解析服务器
+  nameserver:
+    - https://dns.alidns.com/dns-query # 阿里 DNS
+
+  # 3. 国外解析/备用 (已按要求换成 Google)
+  fallback:
+    - https://dns.google/dns-query
+    - 8.8.8.8
+
+  # 4. 强制分流解析：确保白名单域名【只走国内 DNS】
+  nameserver-policy:
+    "rule-set:DirectList,DirectPlus,geosite:cn,apple": [https://dns.alidns.com/dns-query]
+### DNS 配置结束 ###
 
 # 规则集提供者 (对应 INI 中的 ruleset URL)
 # ⚠️ 注意: 由于源文件是纯文本列表格式，需要 Clash Meta (Mihomo) 内核支持
