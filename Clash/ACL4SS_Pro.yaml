@@ -91,6 +91,7 @@ dns:
   fake-ip-filter:
     - 'geosite:cn'
     - 'geosite:apple'
+    - '+.argotunnel.com'
 
   nameserver:
     - https://dns.alidns.com/dns-query
@@ -104,6 +105,8 @@ dns:
       - https://dns.alidns.com/dns-query
     'geosite:apple':
       - https://dns.alidns.com/dns-query
+    '+.argotunnel.com':
+      - https://dns.google/dns-query
 ### DNS 配置结束 ###
 
 # 规则集提供者 (对应 INI 中的 ruleset URL)
