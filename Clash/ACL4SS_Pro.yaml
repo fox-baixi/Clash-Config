@@ -106,7 +106,7 @@ dns:
     'geosite:apple':
       - https://dns.alidns.com/dns-query
     'region2.v2.argotunnel.com':
-      - https://dns.google/dns-query
+      - https://dns.alidns.com/dns-query
 ### DNS 配置结束 ###
 
 # 规则集提供者 (对应 INI 中的 ruleset URL)
