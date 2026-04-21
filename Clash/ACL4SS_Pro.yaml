@@ -88,31 +88,18 @@ dns:
   fake-ip-range: 198.18.0.1/16
   listen: 0.0.0.0:1053
 
-  # 让 fake-ip-filter 支持规则语法
-  fake-ip-filter-mode: rule
-
-  # 只把直连相关域名排除 fake-ip
   fake-ip-filter:
-    - 'rule-set:DirectList'
-    - 'rule-set:DirectPlus'
     - 'geosite:cn'
     - 'geosite:apple'
 
-  # 默认 DNS
   nameserver:
     - https://dns.alidns.com/dns-query
 
-  # 备用 DNS
   fallback:
     - https://dns.google/dns-query
     - 8.8.8.8
 
-  # 只处理直连域名
   nameserver-policy:
-    'rule-set:DirectList':
-      - https://dns.alidns.com/dns-query
-    'rule-set:DirectPlus':
-      - https://dns.alidns.com/dns-query
     'geosite:cn':
       - https://dns.alidns.com/dns-query
     'geosite:apple':
