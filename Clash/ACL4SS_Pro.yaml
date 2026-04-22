@@ -89,9 +89,6 @@ dns:
   listen: 0.0.0.0:1053
 
   fake-ip-filter:
-    - 'geosite:cn'
-    - 'geosite:apple'
-    - 'region2.v2.argotunnel.com'
     - "rule-set:my_dns_rules"
 
   nameserver:
