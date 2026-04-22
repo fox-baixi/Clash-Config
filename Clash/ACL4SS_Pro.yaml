@@ -180,7 +180,6 @@ rule-providers:
     path: ./ruleset/DirectPlus.yaml
     interval: 86400
 
-  rule-providers:
   my_dns_rules:
     type: http
     behavior: domain
