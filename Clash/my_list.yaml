@@ -1,2 +1,5 @@
 payload:
-  - 'region2.v2.argotunnel.com'
+  - '+.argotunnel.com'
+  - '+.steampowered.com'
+  - '+.steamcommunity.com'
+  - '+.steamstatic.com'
