@@ -13,6 +13,9 @@ dns:
     - 'geosite:apple'
     - "rule-set:my_dns_rules"
 
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+
   nameserver:
     - https://dns.cloudflare.com/dns-query
     - https://dns.google/dns-query
