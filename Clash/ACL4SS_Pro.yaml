@@ -30,6 +30,10 @@ dns:
       - https://dns.alidns.com/dns-query
 ### DNS 配置结束 ###
 
+### 节点列表 ###
+proxies: []
+
+### 策略组 ###
 proxy-groups:
   - name: 🔰国外流量
     type: select
