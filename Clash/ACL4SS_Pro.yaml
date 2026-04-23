@@ -1,13 +1,12 @@
-
-# 已将 ACL4SSR INI 转换为 Clash.Meta (Mihomo) YAML 格式
-# 对应你的 INI 配置逻辑
-
 ### DNS 配置开始 (只处理直连) ###
 dns:
   enable: true
   ipv6: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+  default-nameserver: 
+    - 223.5.5.5
+    - 1.1.1.1
 
   fake-ip-filter:
     - 'geosite:cn'
@@ -15,18 +14,14 @@ dns:
     - "rule-set:my_dns_rules"
 
   nameserver:
-    - https://dns.alidns.com/dns-query
-
-  fallback:
+    - https://dns.cloudflare.com/dns-query
     - https://dns.google/dns-query
-    - 8.8.8.8
+
 
   nameserver-policy:
     'geosite:cn':
       - https://dns.alidns.com/dns-query
     'geosite:apple':
-      - https://dns.alidns.com/dns-query
-    'region2.v2.argotunnel.com':
       - https://dns.alidns.com/dns-query
     "rule-set:my_dns_rules":
       - https://dns.alidns.com/dns-query
