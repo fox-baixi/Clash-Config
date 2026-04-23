@@ -18,8 +18,8 @@ dns:
 
   nameserver:
     - https://dns.google/dns-query
-    - https://dns.alidns.com/dns-query
     - https://dns.cloudflare.com/dns-query
+    - https://dns.alidns.com/dns-query
 
   nameserver-policy:
     'geosite:cn':
