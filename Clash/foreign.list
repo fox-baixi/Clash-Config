@@ -545,4 +545,4 @@ DOMAIN-SUFFIX,yimg.com
 #steam
 DOMAIN,api.steampowered.com
 DOMAIN,store.steampowered.com
-# DOMAIN-SUFFIX,steamcommunity.com
+DOMAIN-SUFFIX,steamcommunity.com
