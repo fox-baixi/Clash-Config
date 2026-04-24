@@ -43,8 +43,8 @@ proxy-groups:
   - name: ♻️自动选择
     type: url-test
     url: http://cp.cloudflare.com/generate_204
-    interval: 300
-    tolerance: 30
+    interval: 600
+    tolerance: 50
     include-all: true
     filter: ".*"
 
