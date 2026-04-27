@@ -1,7 +1,8 @@
 ### DNS 配置开始 (只处理直连) ###
+ipv6: true
 dns:
   enable: true
-  ipv6: false
+  ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   default-nameserver: 
