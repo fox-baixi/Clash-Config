@@ -11,6 +11,7 @@ tcp-concurrent: true
 dns:
   enable: true
   ipv6: true
+  listen: :53
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   default-nameserver: 
