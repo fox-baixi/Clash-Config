@@ -37,3 +37,5 @@ DOMAIN-SUFFIX,api.nvidia.com
 # 淘宝APT
 DOMAIN-SUFFIX,vectorengine.ai
 DOMAIN-SUFFIX,apiplus.org
+
+DOMAIN-SUFFIX,geekbench.com
