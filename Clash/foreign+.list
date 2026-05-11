@@ -42,3 +42,7 @@ DOMAIN-SUFFIX,geekbench.com
 
 DOMAIN-SUFFIX,fastlydns.net
 DOMAIN-SUFFIX,docker.com
+
+# docker
+DOMAIN-SUFFIX,docker.io
+DOMAIN-SUFFIX,docker.com
