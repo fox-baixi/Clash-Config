@@ -49,3 +49,5 @@ DOMAIN-SUFFIX,docker.com
 
 # cf验证
 DOMAIN-SUFFIX,challenges.cloudflare.com
+
+DOMAIN-SUFFIX,dedebian.org
