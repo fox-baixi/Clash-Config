@@ -51,3 +51,5 @@ DOMAIN-SUFFIX,docker.com
 DOMAIN-SUFFIX,challenges.cloudflare.com
 
 DOMAIN-SUFFIX,dedebian.org
+
+DOMAIN-SUFFIX,claude.com
