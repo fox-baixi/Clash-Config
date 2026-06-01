@@ -50,6 +50,9 @@ DOMAIN-SUFFIX,docker.com
 # cf验证
 DOMAIN-SUFFIX,challenges.cloudflare.com
 
+#PVE
+DOMAIN-SUFFIX,proxmox.com
+
 DOMAIN-SUFFIX,dedebian.org
 DOMAIN-SUFFIX,fastly.net
 
