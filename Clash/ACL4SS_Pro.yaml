@@ -35,13 +35,6 @@ proxy-groups:
     include-all: true
     filter: ".*"
 
-  - name: Ⓜ️微软服务
-    type: select
-    proxies:
-      - 🚀直接连接
-      - 🔰国外流量
-      - ♻️自动选择
-
   - name: 📢谷歌服务
     type: select
     proxies:
@@ -73,6 +66,13 @@ proxy-groups:
       - 🔰国外流量
       - ♻️自动选择
       - 🚀直接连接
+
+  - name: Ⓜ️微软服务
+    type: select
+    proxies:
+      - 🚀直接连接
+      - 🔰国外流量
+      - ♻️自动选择
 
   - name: 🍎苹果服务
     type: select
