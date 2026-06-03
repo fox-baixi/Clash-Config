@@ -138,6 +138,14 @@ rule-providers:
     path: ./ruleset/Direct.yaml
     interval: 86400
 
+  Youtube:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Youtube.list"
+    path: ./ruleset/Youtube.yaml
+    interval: 86400
+
   DirectPlus:
     type: http
     behavior: classical
@@ -196,6 +204,7 @@ rules:
   - RULE-SET,Bilibili,🎬国内媒体
   
   # 主流媒体 (Youtube等)
+  - RULE-SET,Youtube,🌍主流媒体
   - GEOSITE,category-media,🌍主流媒体
 
   # 微软服务
