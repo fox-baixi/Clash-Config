@@ -173,6 +173,7 @@ rule-providers:
   my_dns_rules:
     type: http
     behavior: domain
+    format: text
     url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/my_dns.list"
     path: ./ruleset/my_dns.yaml
     interval: 86400
