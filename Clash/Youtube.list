@@ -1,6 +1,0 @@
-# 🎬Youtube 规则集
-# 从 YAML 文件自动生成
-
-DOMAIN-SUFFIX,googlevideo.com
-DOMAIN-SUFFIX,youtube.com
-DOMAIN,youtubei.googleapis.com

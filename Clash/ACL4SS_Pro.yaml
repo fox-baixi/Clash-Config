@@ -138,14 +138,6 @@ rule-providers:
     path: ./ruleset/Direct.yaml
     interval: 86400
 
-  Youtube:
-    type: http
-    behavior: classical
-    format: text
-    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Youtube.list"
-    path: ./ruleset/Youtube.yaml
-    interval: 86400
-
   DirectPlus:
     type: http
     behavior: classical
@@ -187,10 +179,6 @@ rules:
   - RULE-SET,Block,⛔️广告拦截
   - RULE-SET,BlockPlus,⛔️广告拦截
   
-  # 国外流量
-  - RULE-SET,Foreign,🔰国外流量
-  - RULE-SET,ForeignPlus,🔰国外流量
-  
   # Telegram
   - GEOIP,telegram,✈️Telegram
   - GEOSITE,telegram,✈️Telegram
@@ -199,13 +187,18 @@ rules:
   - GEOIP,netflix,🎥Netflix
   - GEOSITE,netflix,🎥Netflix
   
+  # 主流媒体 (Youtube等)
+  - GEOSITE,youtube,🌍主流媒体
+  - GEOSITE,category-media,🌍主流媒体
+  
   # 国内媒体
   - GEOSITE,category-media-cn,🎬国内媒体
   - RULE-SET,Bilibili,🎬国内媒体
   
-  # 主流媒体 (Youtube等)
-  - RULE-SET,Youtube,🌍主流媒体
-  - GEOSITE,category-media,🌍主流媒体
+  # 国外流量
+  - RULE-SET,Foreign,🔰国外流量
+  - RULE-SET,ForeignPlus,🔰国外流量
+
 
   # 微软服务
   - RULE-SET,Microsoft,Ⓜ️微软服务
