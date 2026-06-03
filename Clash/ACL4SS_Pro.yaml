@@ -167,12 +167,9 @@ rule-providers:
     behavior: domain
     format: text
     url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/my_list.list"
-    path: ./ruleset/my_list.list  # 手机本地缓存路径
+    path: ./ruleset/my_list.yaml  # 手机本地缓存路径
     interval: 86400               # 自动更新间隔（秒），86400 是 24 小时
 
-    # 原引用保留：
-    # url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/my_list.yaml"
-    # path: ./ruleset/my_list.yaml  # 手机本地缓存路径
 
 # 规则 (对应 INI 中的 ruleset 顺序)
 rules:
