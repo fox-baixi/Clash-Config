@@ -1,12 +1,4 @@
 
-mixed-port: 7890
-mode: rule  
-ipv6: true
-unified-delay: true
-tcp-concurrent: true
-
-
-
 ### 策略组 ###
 proxy-groups:
   - name: 🔰国外流量

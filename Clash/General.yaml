@@ -1,0 +1,6 @@
+
+mixed-port: 7890
+mode: rule  
+ipv6: true
+unified-delay: true
+tcp-concurrent: true
