@@ -166,8 +166,8 @@ rule-providers:
     type: http
     behavior: domain
     format: text
-    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/my_list.list"
-    path: ./ruleset/my_list.yaml  # 手机本地缓存路径
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/my_dns.list"
+    path: ./ruleset/my_dns.yaml  # 手机本地缓存路径
     interval: 86400               # 自动更新间隔（秒），86400 是 24 小时
 
 
