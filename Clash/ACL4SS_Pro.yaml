@@ -101,8 +101,8 @@ rule-providers:
     type: http
     behavior: classical
     format: text
-    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Block-Plus.list"
-    path: ./ruleset/BlockPlus.yaml
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Block_Plus.list"
+    path: ./ruleset/Block_Plus.yaml
     interval: 86400
 
   Foreign:
@@ -117,24 +117,17 @@ rule-providers:
     type: http
     behavior: classical
     format: text
-    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/foreign-Plus.list"
-    path: ./ruleset/ForeignPlus.yaml
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/foreign_Plus.list"
+    path: ./ruleset/Foreign_Plus.yaml
     interval: 86400
 
-  Youtube:
-    type: http
-    behavior: classical
-    format: text
-    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Youtube.list"
-    path: ./ruleset/Youtube.yaml
-    interval: 86400
 
   LocalDownload:
     type: http
     behavior: classical
     format: text
     url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Local_Download.list"
-    path: ./ruleset/LocalDownload.yaml
+    path: ./ruleset/Local_Download.yaml
     interval: 86400
     
   DirectList:
@@ -149,8 +142,8 @@ rule-providers:
     type: http
     behavior: classical
     format: text
-    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Direct-Plus.list"
-    path: ./ruleset/DirectPlus.yaml
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Direct_Plus.list"
+    path: ./ruleset/Direct_Plus.yaml
     interval: 86400
 
   Bilibili:
@@ -172,9 +165,14 @@ rule-providers:
   my_dns_rules:
     type: http
     behavior: domain
-    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/my_list.yaml"
-    path: ./ruleset/my_list.yaml  # 手机本地缓存路径
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/my_list.list"
+    path: ./ruleset/my_list.list  # 手机本地缓存路径
     interval: 86400               # 自动更新间隔（秒），86400 是 24 小时
+
+    # 原引用保留：
+    # url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/my_list.yaml"
+    # path: ./ruleset/my_list.yaml  # 手机本地缓存路径
 
 # 规则 (对应 INI 中的 ruleset 顺序)
 rules:
@@ -201,7 +199,6 @@ rules:
   - RULE-SET,Bilibili,🎬国内媒体
   
   # 主流媒体 (Youtube等)
-  - RULE-SET,Youtube,🌍主流媒体
   - GEOSITE,category-media,🌍主流媒体
 
   # 微软服务
