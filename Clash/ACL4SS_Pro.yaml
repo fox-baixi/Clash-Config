@@ -15,6 +15,9 @@ proxy-groups:
     interval: 600
     tolerance: 50
     include-all: true
+    # 这里的 filter 对应 INI 中的 .* 正则，意为选中所有节点
+    # filter: ".*"
+    # 这里的 filter 对应 INI 中的 ^(?!💤).* 正则，意为除了以 💤 开头的节点，都选中
     filter: "^(?!💤).*"
 
   - name: ⚓️其他流量
