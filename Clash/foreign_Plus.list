@@ -48,7 +48,7 @@ DOMAIN-SUFFIX,docker.io
 DOMAIN-SUFFIX,docker.com
 
 # cf验证
-DOMAIN-SUFFIX,challenges.cloudflare.com
+DOMAIN-SUFFIX,cloudflare.com
 
 #PVE
 DOMAIN-SUFFIX,proxmox.com
