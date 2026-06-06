@@ -10,6 +10,7 @@ dns:
 
   fake-ip-filter:
     - 'geosite:cn'
+    - 'geosite:steam@cn'
     - 'rule-set:my_dns_rules'
 
   proxy-server-nameserver:
@@ -22,6 +23,8 @@ dns:
 
   nameserver-policy:
     'geosite:cn':
+      - https://dns.alidns.com/dns-query
+     'geosite:steam@cn':
       - https://dns.alidns.com/dns-query
     "rule-set:my_dns_rules":
       - https://dns.alidns.com/dns-query
