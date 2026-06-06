@@ -203,6 +203,7 @@ rules:
   
   # 谷歌服务
   - GEOSITE,google,📢谷歌服务
+  - GEOIP,google,📢谷歌服务
   
   # 苹果服务
   - GEOSITE,apple,🍎苹果服务
