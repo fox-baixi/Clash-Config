@@ -191,12 +191,12 @@ rules:
   - GEOIP,netflix,🎥Netflix
   - GEOSITE,netflix,🎥Netflix
   
-  # 主流媒体
-  - GEOSITE,category-media,🌍主流媒体
-  
   # 国内媒体
   - GEOSITE,category-media-cn,🎬国内媒体
   - RULE-SET,Bilibili,🎬国内媒体
+  
+  # 主流媒体
+  - GEOSITE,category-media,🌍主流媒体
 
   # 微软服务
   - GEOSITE,microsoft,Ⓜ️微软服务
