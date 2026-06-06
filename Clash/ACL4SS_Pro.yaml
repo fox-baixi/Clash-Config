@@ -177,6 +177,9 @@ rule-providers:
 
 # 规则 
 rules:
+  # 自定义
+  - RULE-SET,ForeignPlus,🔰国外流量
+  
   # 广告拦截
   - GEOIP,ad,⛔️广告拦截
   - GEOSITE,category-ads-all,⛔️广告拦截
@@ -210,7 +213,6 @@ rules:
     
   # 国外流量
   - RULE-SET,Foreign,🔰国外流量
-  - RULE-SET,ForeignPlus,🔰国外流量
 
   # 直接连接
   - GEOIP,CN,🚀直接连接
