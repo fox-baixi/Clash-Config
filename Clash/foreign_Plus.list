@@ -28,7 +28,6 @@ DOMAIN-KEYWORD,github
 
 # steam
 DOMAIN-SUFFIX,steamstatic.com
-# DOMAIN-SUFFIX,fastly.steamstatic.com
 
 # ai
 DOMAIN-SUFFIX,openai.com
@@ -48,7 +47,7 @@ DOMAIN-SUFFIX,docker.com
 DOMAIN-SUFFIX,docker.io
 DOMAIN-SUFFIX,docker.com
 
-# cf验证
+# cf云
 DOMAIN-SUFFIX,cloudflare.com
 
 #PVE
@@ -60,6 +59,7 @@ DOMAIN-SUFFIX,fastly.net
 DOMAIN-SUFFIX,claude.com
 DOMAIN-SUFFIX,claude.ai
 
+# 备用机场
 DOMAIN-SUFFIX,kitty.sb
 DOMAIN-SUFFIX,shlii.io
 
