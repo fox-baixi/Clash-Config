@@ -10,7 +10,7 @@ dns:
 
   fake-ip-filter:
     - 'geosite:cn'
-    - 'geosite:steam@cn'
+    - 'geosite:steam-cn'
     - 'rule-set:my_dns_rules'
     - '!+.steamcommunity.com'
 
