@@ -12,6 +12,8 @@ dns:
     - 'geosite:cn'
     - 'geosite:steam@cn'
     - 'rule-set:my_dns_rules'
+    - 'steamcommunity.com'
+    - '*.steamcommunity.com'
 
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
