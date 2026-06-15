@@ -49,7 +49,7 @@ DOMAIN-SUFFIX,docker.com
 
 # cf云
 DOMAIN-SUFFIX,cloudflare.com
-DOMAIN-SUFFIX,.workers.dev
+DOMAIN-SUFFIX,workers.dev
 
 #PVE
 DOMAIN-SUFFIX,proxmox.com
