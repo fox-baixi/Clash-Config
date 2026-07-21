@@ -31,6 +31,7 @@ DOMAIN-SUFFIX,jina.ai
 DOMAIN-SUFFIX,imagedelivery.net
 DOMAIN-SUFFIX,twimg.com
 DOMAIN-SUFFIX,dynadot.com
+DOMAIN-SUFFIX,pythonhosted.org
 
 # steam
 DOMAIN-SUFFIX,steamstatic.com
