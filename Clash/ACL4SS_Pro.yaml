@@ -47,6 +47,15 @@ proxy-groups:
     include-all: true
     filter: ".*"
 
+  - name: 🤖OpenAI
+    type: select
+    proxies:
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🚀直接连接
+    include-all: true
+    filter: ".*"
+
   - name: 🎥Netflix
     type: select
     proxies:
@@ -133,6 +142,14 @@ rule-providers:
     path: ./ruleset/Foreign_Plus.yaml
     interval: 86400
 
+  ChatGPT:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/ChatGPT.list"
+    path: ./ruleset/ChatGPT.yaml
+    interval: 86400
+
 
   LocalDownload:
     type: http
@@ -178,6 +195,7 @@ rule-providers:
 # 规则 
 rules:
   # 自定义
+  - RULE-SET,ChatGPT,🤖OpenAI
   - RULE-SET,ForeignPlus,🔰国外流量
   
   # 广告拦截

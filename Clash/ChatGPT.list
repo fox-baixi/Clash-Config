@@ -1,0 +1,16 @@
+# 🤖 ChatGPT / OpenAI 规则集
+# 手动维护的额外规则
+
+DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN-SUFFIX,sentry.io
+DOMAIN-SUFFIX,auth0.com
+DOMAIN-SUFFIX,client-api.arkoselabs.com
+DOMAIN-SUFFIX,identrust.com
+DOMAIN-SUFFIX,intercom.io
+DOMAIN-SUFFIX,intercomcdn.com
+DOMAIN-SUFFIX,featuregates.org
+DOMAIN-SUFFIX,statsigapi.net
+DOMAIN-KEYWORD,openai
