@@ -1,4 +1,4 @@
-# 🤖 ChatGPT / OpenAI 规则集
+# 🤖 AI Services 规则集
 # 手动维护的额外规则
 
 DOMAIN-SUFFIX,openai.com
@@ -14,3 +14,12 @@ DOMAIN-SUFFIX,intercomcdn.com
 DOMAIN-SUFFIX,featuregates.org
 DOMAIN-SUFFIX,statsigapi.net
 DOMAIN-KEYWORD,openai
+
+# Claude / Anthropic
+DOMAIN-SUFFIX,anthropic.com
+DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,claude.com
+DOMAIN-SUFFIX,claude.usercontent.com
+DOMAIN-KEYWORD,claude
+DOMAIN-KEYWORD,anthropic
+

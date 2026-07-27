@@ -62,9 +62,6 @@ DOMAIN-SUFFIX,proxmox.com
 DOMAIN-SUFFIX,dedebian.org
 DOMAIN-SUFFIX,fastly.net
 
-DOMAIN-SUFFIX,claude.com
-DOMAIN-SUFFIX,claude.ai
-
 # 备用机场
 DOMAIN-SUFFIX,kitty.sb
 DOMAIN-SUFFIX,shlii.io

@@ -47,7 +47,7 @@ proxy-groups:
     include-all: true
     filter: ".*"
 
-  - name: 🤖OpenAI
+  - name: 🤖AI-Services
     type: select
     proxies:
       - 🔰国外流量
@@ -142,12 +142,12 @@ rule-providers:
     path: ./ruleset/Foreign_Plus.yaml
     interval: 86400
 
-  ChatGPT:
+  AIServices:
     type: http
     behavior: classical
     format: text
-    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/ChatGPT.list"
-    path: ./ruleset/ChatGPT.yaml
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/AI_Services.list"
+    path: ./ruleset/AI_Services.yaml
     interval: 86400
 
 
@@ -195,7 +195,7 @@ rule-providers:
 # 规则 
 rules:
   # 自定义
-  - RULE-SET,ChatGPT,🤖OpenAI
+  - RULE-SET,AIServices,🤖AI-Services
   - RULE-SET,ForeignPlus,🔰国外流量
   
   # 广告拦截
