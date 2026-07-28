@@ -32,7 +32,8 @@ DOMAIN-SUFFIX,imagedelivery.net
 DOMAIN-SUFFIX,twimg.com
 DOMAIN-SUFFIX,dynadot.com
 DOMAIN-SUFFIX,pythonhosted.org
-DOMAIN-SUFFIX,api.zening.xyz
+DOMAIN-SUFFIX,zening.xyz
+DOMAIN-SUFFIX,hytron.io
 
 # steam
 DOMAIN-SUFFIX,steamstatic.com
