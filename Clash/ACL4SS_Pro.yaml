@@ -109,7 +109,7 @@ proxy-groups:
 # 规则集提供者
 # ⚠️ 注意: 由于源文件是纯文本列表格式，需要 Clash Meta (Mihomo) 内核支持
 # ⚠️ 已添加 format: text 并在 URL 前增加 ghproxy.net 加速
-
+rule-providers:
   Block:
     type: http
     behavior: domain
