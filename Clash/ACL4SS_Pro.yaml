@@ -110,11 +110,12 @@ proxy-groups:
 # ⚠️ 注意: 由于源文件是纯文本列表格式，需要 Clash Meta (Mihomo) 内核支持
 # ⚠️ 已添加 format: text 并在 URL 前增加 ghproxy.net 加速
 rule-providers:
-  Block:
+
+  BlockPlus:
     type: http
-    behavior: domain
-    format: yaml
-    url: "https://ghproxy.net/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.yaml"
+    behavior: classical
+    format: text
+    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Block.list"
     path: ./ruleset/Block.yaml
     interval: 86400
 
