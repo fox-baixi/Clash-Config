@@ -114,7 +114,7 @@ proxy-groups:
     type: http
     behavior: domain
     format: yaml
-    url: https://ghproxy.net/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.yaml
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.yaml"
     path: ./ruleset/Block.yaml
     interval: 86400
 
