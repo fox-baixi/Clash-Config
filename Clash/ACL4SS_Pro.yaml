@@ -111,7 +111,7 @@ proxy-groups:
 # ⚠️ 已添加 format: text 并在 URL 前增加 ghproxy.net 加速
 rule-providers:
 
-  BlockPlus:
+  Block:
     type: http
     behavior: classical
     format: text
