@@ -114,7 +114,8 @@ rule-providers:
     type: http
     behavior: classical
     format: text
-    url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Block.list"
+    # url: "https://ghproxy.net/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Block.list"
+    url: https://ghproxy.net/https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.yaml
     path: ./ruleset/Block.yaml
     interval: 86400
 
