@@ -34,6 +34,10 @@ DOMAIN-SUFFIX,dynadot.com
 DOMAIN-SUFFIX,pythonhosted.org
 DOMAIN-SUFFIX,zening.xyz
 DOMAIN-SUFFIX,hytron.io
+DOMAIN-SUFFIX,themoviedb.org
+DOMAIN-SUFFIX,polocloud.net
+DOMAIN-SUFFIX,hembed.com
+DOMAIN-SUFFIX,mikanani.me
 
 # steam
 DOMAIN-SUFFIX,steamstatic.com
