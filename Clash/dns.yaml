@@ -9,6 +9,14 @@ dns:
     - 8.8.8.8
 
   fake-ip-filter:
+    # 优先排除 Google 全系（使其强制下发 198.18.x.x 的 Fake-IP，由 31.2 代理）
+    - '!geosite:google'
+    - '!geosite:google@cn'
+    - '!+.xn--ngstr-lra8j.com'
+    - '!+.googleapis.cn'
+    - '!+.g.cn'
+    - '!+.google.cn'
+    # 其余国内域名继续下发真实 IP，直接走 31.1 主路由直连
     - 'geosite:cn'
     - 'geosite:steam@cn'
     - 'rule-set:my_dns_rules'
@@ -22,6 +30,9 @@ dns:
     - https://dns.alidns.com/dns-query
 
   nameserver-policy:
+    'geosite:google':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
     'geosite:cn':
       - https://dns.alidns.com/dns-query
     'geosite:steam@cn':
