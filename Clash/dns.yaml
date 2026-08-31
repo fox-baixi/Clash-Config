@@ -4,35 +4,69 @@ dns:
   listen: 0.0.0.0:53
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+
+  # ====================================================================
+  # 🎯 开启白名单模式 (whitelist)：
+  # 未在下面 fake-ip-filter 列出的域名（所有国内网站、未知域名）
+  # 默认全部由阿里 DNS 解析并直接下发真实国内 IP（100% 走 31.1 直连）
+  # ====================================================================
+  fake-ip-filter-mode: whitelist
+
+  # 🎯 仅在此列表中的【需要代理的域名】，才下发 198.18.x.x Fake-IP（转给 31.2 代理）
+  # 完整收录 ACL4SS_Pro.yaml 中走代理的所有规则集与分类
+  fake-ip-filter:
+    - 'geosite:google'
+    - 'geosite:telegram'
+    - 'geosite:netflix'
+    - 'geosite:category-media'
+    - 'geosite:gfw'
+    - 'geosite:geolocation-!cn'
+    - 'rule-set:Foreign'
+    - 'rule-set:ForeignPlus'
+    - 'rule-set:AIServices'
+    - 'rule-set:Telegram'
+
   default-nameserver: 
     - 223.5.5.5
     - 8.8.8.8
 
-  fake-ip-filter:
-    - '*.lan'
-    - '*.local'
-    - 'dns.msftncsi.com'
-    - 'www.msftncsi.com'
-    - 'www.msftconnecttest.com'
-    - '+.connectivitycheck.gstatic.com'
-    - 'geosite:steam@cn'
-    - 'rule-set:my_dns_rules'
-
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
 
+  # 默认国内真实 IP 解析使用的高速 DNS
   nameserver:
-    - https://dns.google/dns-query
-    - https://dns.cloudflare.com/dns-query
     - https://dns.alidns.com/dns-query
+    - 223.5.5.5
 
+  # 走代理的海外域名，统一使用海外安全加密 DNS 彻底防止污染
   nameserver-policy:
     'geosite:google':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
-    'geosite:cn':
-      - https://dns.alidns.com/dns-query
-    'geosite:steam@cn':
-      - https://dns.alidns.com/dns-query
-    'rule-set:my_dns_rules':
-      - https://dns.alidns.com/dns-query
+    'geosite:telegram':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+    'geosite:netflix':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+    'geosite:category-media':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+    'geosite:gfw':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+    'geosite:geolocation-!cn':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+    'rule-set:Foreign':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+    'rule-set:ForeignPlus':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+    'rule-set:AIServices':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+    'rule-set:Telegram':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
