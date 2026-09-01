@@ -76,3 +76,25 @@ DOMAIN-SUFFIX,songsongai.com
 DOMAIN-SUFFIX,nbility.dev
 DOMAIN-SUFFIX,anyrouter.top
 
+# AI / NSFW / Crypto
+DOMAIN-SUFFIX,sora.com
+DOMAIN-SUFFIX,grok.com
+DOMAIN-SUFFIX,perplexity.ai
+DOMAIN-SUFFIX,e-hentai.org
+DOMAIN-SUFFIX,missav.ws
+DOMAIN-SUFFIX,missav.ai
+DOMAIN-SUFFIX,missav.live
+DOMAIN-SUFFIX,hanimeone.me
+DOMAIN-SUFFIX,hanime1.com
+DOMAIN-SUFFIX,coinbase.com
+DOMAIN-SUFFIX,okx.com
+
+# 字节跳动海外 (ByteDance Overseas / TikTok)
+DOMAIN-SUFFIX,byteoversea.com
+DOMAIN-SUFFIX,ibytedtos.com
+DOMAIN-SUFFIX,ibyteimg.com
+DOMAIN-SUFFIX,byteplus.com
+DOMAIN-SUFFIX,bytepluscdn.com
+DOMAIN-SUFFIX,tiktok.com
+DOMAIN-SUFFIX,tiktokcdn.com
+DOMAIN-SUFFIX,tiktokv.com
