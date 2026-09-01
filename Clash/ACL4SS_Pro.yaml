@@ -208,7 +208,6 @@ rules:
   - RULE-SET,ForeignPlus,🔰国外流量
   
   # 广告拦截
-  - GEOIP,ad,⛔️广告拦截
   - GEOSITE,category-ads-all,⛔️广告拦截
   - RULE-SET,Block,⛔️广告拦截
   - RULE-SET,BlockPlus,⛔️广告拦截
@@ -229,7 +228,14 @@ rules:
   # 主流媒体
   - GEOSITE,category-media,🌍主流媒体
 
-  # 微软服务
+  # 微软大流量/更新下载（强制直连，防止偷跑代理流量）
+  - GEOSITE,win-update,🚀直接连接
+  - DOMAIN-SUFFIX,delivery.mp.microsoft.com,🚀直接连接
+  - DOMAIN-SUFFIX,windowsupdate.com,🚀直接连接
+  - DOMAIN-SUFFIX,update.microsoft.com,🚀直接连接
+  - DOMAIN-SUFFIX,dl.delivery.mp.microsoft.com,🚀直接连接
+
+  # 微软常规服务（可自由切换直连/代理）
   - GEOSITE,microsoft,Ⓜ️微软服务
   
   # 谷歌服务

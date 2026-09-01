@@ -21,6 +21,7 @@ dns:
     - 'geosite:category-media'
     - 'geosite:gfw'
     - 'geosite:geolocation-!cn'
+    - 'geosite:microsoft'
     - 'rule-set:Foreign'
     - 'rule-set:ForeignPlus'
     - 'rule-set:AIServices'
@@ -40,6 +41,10 @@ dns:
 
   # 走代理的海外域名，统一使用海外安全加密 DNS 彻底防止污染
   nameserver-policy:
+    # 🎯 广告域名在 DNS 阶段直接拒绝（0ms 本地秒回 Refused，消除网页转圈与无效查询）
+    'geosite:category-ads-all': rcode://refused
+    'rule-set:Block,BlockPlus': rcode://refused
+
     'geosite:google':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
@@ -50,6 +55,9 @@ dns:
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
     'geosite:category-media':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+    'geosite:microsoft':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
     'geosite:gfw':
