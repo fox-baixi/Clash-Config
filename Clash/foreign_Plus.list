@@ -98,3 +98,10 @@ DOMAIN-SUFFIX,bytepluscdn.com
 DOMAIN-SUFFIX,tiktok.com
 DOMAIN-SUFFIX,tiktokcdn.com
 DOMAIN-SUFFIX,tiktokv.com
+
+# Unity
+DOMAIN-SUFFIX,unity3d.com
+DOMAIN-SUFFIX,unity.com
+DOMAIN-SUFFIX,unitychina.cn
+DOMAIN-SUFFIX,unityops.net
+DOMAIN-SUFFIX,unityservices.com
