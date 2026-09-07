@@ -65,12 +65,12 @@ proxy-groups:
     include-all: true
     filter: ".*"
 
-  - name: 🎬国内媒体
-    type: select
-    proxies:
-      - 🚀直接连接
-      - ♻️自动选择
-      - 🔰国外流量
+  # - name: 🎬国内媒体
+  #   type: select
+  #   proxies:
+  #     - 🚀直接连接
+  #     - ♻️自动选择
+  #     - 🔰国外流量
 
   - name: 🌍主流媒体
     type: select
@@ -184,21 +184,21 @@ rule-providers:
     path: ./ruleset/Direct_Plus.yaml
     interval: 86400
 
-  Bilibili:
-    type: http
-    behavior: classical
-    format: text
-    url: "https://ghfast.top/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Bilibili.list"
-    path: ./ruleset/Bilibili.yaml
-    interval: 86400
+  # Bilibili:
+  #   type: http
+  #   behavior: classical
+  #   format: text
+  #   url: "https://ghfast.top/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Bilibili.list"
+  #   path: ./ruleset/Bilibili.yaml
+  #   interval: 86400
 
-  my_dns_rules:
-    type: http
-    behavior: domain
-    format: text
-    url: "https://ghfast.top/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/my_dns.list"
-    path: ./ruleset/my_dns.yaml
-    interval: 86400
+  # my_dns_rules:
+  #   type: http
+  #   behavior: domain
+  #   format: text
+  #   url: "https://ghfast.top/https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/my_dns.list"
+  #   path: ./ruleset/my_dns.yaml
+  #   interval: 86400
 
 
 # 规则 
@@ -221,19 +221,15 @@ rules:
   - GEOIP,netflix,🎥Netflix
   - GEOSITE,netflix,🎥Netflix
   
-  # 国内媒体
-  - GEOSITE,category-media-cn,🎬国内媒体
-  - RULE-SET,Bilibili,🎬国内媒体
+  # 国内媒体（已停用，全部自动并入下方 GEOSITE,CN / GEOIP,CN 走直连）
+  # - GEOSITE,category-media-cn,🎬国内媒体
+  # - RULE-SET,Bilibili,🎬国内媒体
   
   # 主流媒体
   - GEOSITE,category-media,🌍主流媒体
 
-  # 微软大流量/更新下载（强制直连，防止偷跑代理流量）
+  # 微软大流量/更新下载（强制直连，防止偷跑代理流量，GEOSITE 已内置涵盖 update/delivery 等域名）
   - GEOSITE,win-update,🚀直接连接
-  - DOMAIN-SUFFIX,delivery.mp.microsoft.com,🚀直接连接
-  - DOMAIN-SUFFIX,windowsupdate.com,🚀直接连接
-  - DOMAIN-SUFFIX,update.microsoft.com,🚀直接连接
-  - DOMAIN-SUFFIX,dl.delivery.mp.microsoft.com,🚀直接连接
 
   # 微软常规服务（可自由切换直连/代理）
   - GEOSITE,microsoft,Ⓜ️微软服务

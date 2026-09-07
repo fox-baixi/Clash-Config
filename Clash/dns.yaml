@@ -22,10 +22,10 @@ dns:
     - 'geosite:gfw'
     - 'geosite:geolocation-!cn'
     - 'geosite:microsoft'
+    - 'geosite:apple'
     - 'rule-set:Foreign'
     - 'rule-set:ForeignPlus'
     - 'rule-set:AIServices'
-    - 'rule-set:Telegram'
 
   default-nameserver: 
     - 223.5.5.5
@@ -45,6 +45,11 @@ dns:
     'geosite:category-ads-all': rcode://refused
     'rule-set:Block,BlockPlus': rcode://refused
 
+    # 🎯 微软更新特例：虽属微软，但强制走国内阿里 DNS 获取国内就近 CDN 节点满速下载
+    'geosite:win-update':
+      - https://dns.alidns.com/dns-query
+      - 223.5.5.5
+
     'geosite:google':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
@@ -60,6 +65,9 @@ dns:
     'geosite:microsoft':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+    'geosite:apple':
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
     'geosite:gfw':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
@@ -73,8 +81,5 @@ dns:
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
     'rule-set:AIServices':
-      - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-    'rule-set:Telegram':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query

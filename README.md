@@ -4,32 +4,37 @@
 
 ## 📋 功能特点
 
-- ✨ **配置维护**：托管定制化的 `ACL4SS_Pro_Custom.ini` 模板
-- 📁 **本地规则**：包含提取的防吸血/直连规则列表 (`Local_Download.list`)
+- ✨ **配置维护**：托管 `ACL4SS_Pro.yaml` 等 Clash 配置
+- 📁 **规则列表**：包含各类防吸血、国内直连、国外流量等规则文件
 - 🔄 **Gist 同步**：提交更改到 `main` 分支时，自动将 `Clash/` 目录下的文件同步到指定的 GitHub Gist
 
 ## 📁 文件说明
 
 ### 核心配置 (Clash/)
 
-- `ACL4SS_Pro_Custom.ini` - � 自定义 Clash 配置文件模板（包含自动选择、防吸血等优化）
-- `Local_Download.list` - 🛑 本地防吸血/直连规则（提取自 Process-Name/Keyword）
-- `ACL4SS_Pro.ini` - 原始规则模板备份
+- `ACL4SS_Pro.yaml` - 自定义 Clash 配置（策略组 + 规则集 + 规则）
+- `dns.yaml` - DNS 相关配置
+- `General.yaml` - 通用配置
 
 ### 规则列表
 
-- `Proxy.list`
-- `Telegram.list`
-- `Netflix.list`
+- `Block.list`
+- `Block_Plus.list`
 - `Bilibili.list`
-- `Apple.list`
 - `Direct.list`
+- `Direct_Plus.list`
+- `foreign.list`
+- `foreign_Plus.list`
+- `AI_Services.list`
+- `Local_Download.list`
+- `Telegram.list`
+- `Microsoft.list`
 - 其他各类媒体与屏蔽列表...
 
 ## 🚀 使用方法
 
 ### 1. 修改配置
-直接编辑 `Clash/` 目录下的 `.ini` 或 `.list` 文件。
+直接编辑 `Clash/` 目录下的 `.yaml` 或 `.list` 文件。
 
 ### 2. 自动同步
 将更改提交并推送到 GitHub 仓库的 `main` 分支：
@@ -55,7 +60,7 @@ https://gist.githubusercontent.com/<用户名>/<Gist-ID>/raw/<文件名>
 
 例如：
 ```
-https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/ACL4SS_Pro_Custom.ini
+https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/ACL4SS_Pro.yaml
 ```
 
 ## ⚙️ 配置说明
