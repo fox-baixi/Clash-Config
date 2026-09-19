@@ -74,6 +74,8 @@ dns:
     'geosite:geolocation-!cn':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 1.1.1.1
+      - 223.5.5.5
     'rule-set:Foreign':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
