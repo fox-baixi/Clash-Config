@@ -31,13 +31,15 @@ dns:
     - 223.5.5.5
 
   proxy-server-nameserver:
-    - https://223.5.5.5/dns-query
+    - https://dns.alidns.com/dns-query
+    - 223.5.5.5
 
-  # 默认国内真实 IP 解析使用的高速纯 HTTPS DNS
+  # 默认国内真实 IP 解析使用的高速 DNS
   nameserver:
-    - https://223.5.5.5/dns-query
+    - https://dns.alidns.com/dns-query
+    - 223.5.5.5
 
-  # 走代理的海外域名，统一使用海外安全加密 HTTPS DNS 彻底防止污染
+  # 走代理的海外域名，统一使用海外安全加密 DNS 彻底防止污染
   nameserver-policy:
     # 🎯 广告域名在 DNS 阶段直接拒绝（0ms 本地秒回 Refused，消除网页转圈与无效查询）
     'geosite:category-ads-all': rcode://refused
@@ -45,39 +47,61 @@ dns:
 
     # 🎯 微软更新特例：虽属微软，但强制走国内阿里 DNS 获取国内就近 CDN 节点满速下载
     'geosite:win-update':
-      - https://223.5.5.5/dns-query
+      - https://dns.alidns.com/dns-query
+      - 223.5.5.5
 
     'geosite:google':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:telegram':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:netflix':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:category-media':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:microsoft':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:apple':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:gfw':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:geolocation-!cn':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 1.1.1.1
+      - 223.5.5.5
     'rule-set:Foreign':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'rule-set:ForeignPlus':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'rule-set:AIServices':
-      - https://8.8.8.8/dns-query
-      - https://1.1.1.1/dns-query
-
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
