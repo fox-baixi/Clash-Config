@@ -106,7 +106,3 @@ DOMAIN-SUFFIX,unity.com
 DOMAIN-SUFFIX,unitychina.cn
 DOMAIN-SUFFIX,unityops.net
 DOMAIN-SUFFIX,unityservices.com
-
-# Let's Encrypt
-DOMAIN-SUFFIX,letsencrypt.org
-DOMAIN-SUFFIX,lencr.org

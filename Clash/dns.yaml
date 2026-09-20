@@ -33,6 +33,7 @@ dns:
 
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
+    - 223.5.5.5
 
   # 默认国内真实 IP 解析使用的高速 DNS
   nameserver:
@@ -53,24 +54,38 @@ dns:
     'geosite:google':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:telegram':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:netflix':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:category-media':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:microsoft':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:apple':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:gfw':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'geosite:geolocation-!cn':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
@@ -79,9 +94,15 @@ dns:
     'rule-set:Foreign':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'rule-set:ForeignPlus':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
     'rule-set:AIServices':
       - https://dns.google/dns-query
       - https://dns.cloudflare.com/dns-query
+      - 8.8.8.8
+      - 1.1.1.1
