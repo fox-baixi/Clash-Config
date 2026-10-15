@@ -24,23 +24,24 @@ dns:
     - 'rule-set:ForeignPlus'
     - 'rule-set:AIServices'
 
-  # 基础引导解析：避免使用明文 UDP 53，采用 IP 形式的 DoT/DoH
+  # 基础引导解析：阿里为主，Google 备用
   default-nameserver: 
     - 223.5.5.5
-    - 119.29.29.29
+    - 8.8.8.8
 
-  # 代理节点域名解析：全走国内高兼容 TLS / DoH
+  # 节点域名解析：阿里加密为主，Google 加密备用
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
     - tls://223.5.5.5:853
-    - tls://dot.pub:853
+    - https://dns.google/dns-query
+    - tls://8.8.8.8:853
 
-  # 默认国内真实 IP 解析：全量走国内 DoH / DoT，彻底杜绝明文 53 劫持
+  # 国内真实 IP 解析：阿里主力（DoH + DoT），Google 加密备用
   nameserver:
     - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
     - tls://223.5.5.5:853
+    - https://dns.google/dns-query
+    - tls://8.8.8.8:853
 
   # 海外与代理域名的定向安全解析
   nameserver-policy:
@@ -48,12 +49,12 @@ dns:
     'geosite:category-ads-all': rcode://refused
     'rule-set:Block,BlockPlus': rcode://refused
 
-    # 🎯 微软更新特例：强制国内 DoH 获取国内满速 CDN
+    # 🎯 微软更新特例：走阿里加密 DNS 获取国内满速 CDN
     'geosite:win-update':
       - https://dns.alidns.com/dns-query
-      - https://doh.pub/dns-query
+      - tls://223.5.5.5:853
 
-    # 🎯 海外规则集：全部走纯加密 DoH / DoT（移除所有 8.8.8.8/1.1.1.1 明文 UDP）
+    # 🎯 海外规则集：纯 Google + Cloudflare 双加密（DoH / DoT）
     'geosite:google':
       - https://dns.google/dns-query
       - https://cloudflare-dns.com/dns-query
