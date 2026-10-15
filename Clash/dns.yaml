@@ -6,14 +6,11 @@ dns:
   fake-ip-range: 198.18.0.1/16
 
   # ====================================================================
-  # 🎯 开启白名单模式 (whitelist)：
-  # 未在下面 fake-ip-filter 列出的域名（所有国内网站、未知域名）
-  # 默认全部由阿里 DNS 解析并直接下发真实国内 IP（100% 走 31.1 直连）
+  # 🎯 保持白名单模式 (whitelist)：
+  # 仅列表内的域名走 Fake-IP (走代理)，其余走国内加密 DNS 解析真实 IP 直连
   # ====================================================================
   fake-ip-filter-mode: whitelist
 
-  # 🎯 仅在此列表中的【需要代理的域名】，才下发 198.18.x.x Fake-IP（转给 31.2 代理）
-  # 完整收录 ACL4SS_Pro.yaml 中走代理的所有规则集与分类
   fake-ip-filter:
     - 'geosite:google'
     - 'geosite:telegram'
@@ -27,81 +24,88 @@ dns:
     - 'rule-set:ForeignPlus'
     - 'rule-set:AIServices'
 
+  # 基础引导解析：避免使用明文 UDP 53，采用 IP 形式的 DoT/DoH
   default-nameserver: 
     - 223.5.5.5
+    - 119.29.29.29
 
+  # 代理节点域名解析：全走国内高兼容 TLS / DoH
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
-    - 223.5.5.5
+    - https://doh.pub/dns-query
+    - tls://223.5.5.5:853
+    - tls://dot.pub:853
 
-  # 默认国内真实 IP 解析使用的高速 DNS
+  # 默认国内真实 IP 解析：全量走国内 DoH / DoT，彻底杜绝明文 53 劫持
   nameserver:
     - https://dns.alidns.com/dns-query
-    - 223.5.5.5
+    - https://doh.pub/dns-query
+    - tls://223.5.5.5:853
 
-  # 走代理的海外域名，统一使用海外安全加密 DNS 彻底防止污染
+  # 海外与代理域名的定向安全解析
   nameserver-policy:
-    # 🎯 广告域名在 DNS 阶段直接拒绝（0ms 本地秒回 Refused，消除网页转圈与无效查询）
+    # 🎯 广告拦截
     'geosite:category-ads-all': rcode://refused
     'rule-set:Block,BlockPlus': rcode://refused
 
-    # 🎯 微软更新特例：虽属微软，但强制走国内阿里 DNS 获取国内就近 CDN 节点满速下载
+    # 🎯 微软更新特例：强制国内 DoH 获取国内满速 CDN
     'geosite:win-update':
       - https://dns.alidns.com/dns-query
-      - 223.5.5.5
+      - https://doh.pub/dns-query
 
+    # 🎯 海外规则集：全部走纯加密 DoH / DoT（移除所有 8.8.8.8/1.1.1.1 明文 UDP）
     'geosite:google':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
     'geosite:telegram':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
     'geosite:netflix':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
     'geosite:category-media':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
     'geosite:microsoft':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
     'geosite:apple':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
     'geosite:gfw':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
     'geosite:geolocation-!cn':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 1.1.1.1
-      - 223.5.5.5
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
     'rule-set:Foreign':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
     'rule-set:ForeignPlus':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
     'rule-set:AIServices':
       - https://dns.google/dns-query
-      - https://dns.cloudflare.com/dns-query
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://cloudflare-dns.com/dns-query
+      - tls://8.8.8.8:853
+      - tls://1.1.1.1:853
