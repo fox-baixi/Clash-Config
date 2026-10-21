@@ -126,14 +126,7 @@ rule-providers:
     url: "https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Block_Plus.list"
     path: ./ruleset/Block_Plus.yaml
     interval: 86400
-    
-  Telegram:
-    type: http
-    behavior: classical
-    format: text
-    url: "https://gist.githubusercontent.com/fox-baixi/128a370090d45e8da2bf3dd2bca2f0e7/raw/Telegram.list"
-    path: ./ruleset/Telegram.yaml
-    interval: 86400
+
 
   Foreign:
     type: http
@@ -192,7 +185,6 @@ rules:
   - RULE-SET,BlockPlus,⛔️广告拦截
   
   # Telegram
-  - RULE-SET,Telegram,✈️Telegram
   - GEOIP,telegram,✈️Telegram
   - GEOSITE,telegram,✈️Telegram
   
