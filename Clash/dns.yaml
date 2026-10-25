@@ -4,26 +4,27 @@ dns:
   listen: 0.0.0.0:53
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
-  # fake-ip-ttl: 5
+  fake-ip-ttl: 30
 
   # ====================================================================
-  # 🎯 保持白名单模式 (whitelist)：
-  # 仅列表内的域名走 Fake-IP (走代理)，其余走国内加密 DNS 解析真实 IP 直连
+  # 🎯 规则模式 (rule)：
+  # 原生支持解析 classical 规则集中的 DOMAIN-SUFFIX，匹配列表的走 Fake-IP，其余走国内加密 DNS 解析真实 IP
   # ====================================================================
-  fake-ip-filter-mode: whitelist
+  fake-ip-filter-mode: rule
 
   fake-ip-filter:
-    - 'geosite:google'
-    - 'geosite:telegram'
-    - 'geosite:netflix'
-    - 'geosite:category-media'
-    - 'geosite:gfw'
-    - 'geosite:geolocation-!cn'
-    - 'geosite:microsoft'
-    - 'geosite:apple'
-    - 'rule-set:Foreign'
-    - 'rule-set:ForeignPlus'
-    - 'rule-set:AIServices'
+    - GEOSITE,google,fake-ip
+    - GEOSITE,telegram,fake-ip
+    - GEOSITE,netflix,fake-ip
+    - GEOSITE,category-media,fake-ip
+    - GEOSITE,gfw,fake-ip
+    - GEOSITE,geolocation-!cn,fake-ip
+    - GEOSITE,microsoft,fake-ip
+    - GEOSITE,apple,fake-ip
+    - RULE-SET,Foreign,fake-ip
+    - RULE-SET,ForeignPlus,fake-ip
+    - RULE-SET,AIServices,fake-ip
+    - MATCH,real-ip
 
   # 基础引导解析：阿里为主，Google 备用
   default-nameserver: 
