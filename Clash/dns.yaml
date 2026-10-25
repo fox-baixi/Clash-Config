@@ -4,7 +4,7 @@ dns:
   listen: 0.0.0.0:53
   enhanced-mode: fake-ip
     fake-ip-range: 198.18.0.1/16
-    fake-ip-ttl: 1
+    fake-ip-ttl: 5
 
   # ====================================================================
   # 🎯 保持白名单模式 (whitelist)：
