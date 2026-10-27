@@ -27,10 +27,11 @@ dns:
     - RULE-SET,AIServices,fake-ip
     - MATCH,real-ip
 
-  # 基础引导解析：阿里为主，Google 备用
+  # 基础引导解析：阿里与 Google 加密 DoT（纯 IP），保留阿里明文兜底
   default-nameserver: 
+    - tls://223.5.5.5:853
+    - tls://8.8.8.8:853
     - 223.5.5.5
-    - 8.8.8.8
 
   # 节点域名解析：阿里加密为主，Google 加密备用
   proxy-server-nameserver:
