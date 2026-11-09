@@ -66,7 +66,7 @@ DOMAIN-SUFFIX,docker.io
 DOMAIN-SUFFIX,docker.com
 
 # cf云
-DOMAIN-SUFFIX,cloudflare.com
+# DOMAIN-SUFFIX,cloudflare.com
 DOMAIN-SUFFIX,workers.dev
 
 #PVE
