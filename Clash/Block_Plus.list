@@ -1,4 +1,4 @@
-﻿# ⛔️广告拦截 扩展规则
+# ⛔️广告拦截 扩展规则
 # 手动维护的额外规则
 
 DOMAIN-SUFFIX,nie.netease.com
@@ -8,3 +8,6 @@ DOMAIN-SUFFIX,kpqppok.com
 DOMAIN-SUFFIX,n0vm474.com
 DOMAIN-SUFFIX,oe07j4c.com
 DOMAIN-SUFFIX,g9o0r8i.com
+
+# 🚨 运营商恶意劫持 / 反诈拦截落地 IP
+IP-CIDR,183.192.65.101/32,no-resolve
