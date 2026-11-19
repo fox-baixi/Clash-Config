@@ -9,22 +9,53 @@ dns:
 
   # ====================================================================
   # 🎯 规则模式 (rule)：
-  # 原生支持解析 classical 规则集中的 DOMAIN-SUFFIX，匹配列表的走 Fake-IP，其余走国内加密 DNS 解析真实 IP
+  # 采用自上而下的严格规则匹配：
+  # 1. 局域网、系统连通性探测、时间同步、本地下载、微软更新及国内直连服务：下发真实 IP (real-ip)
+  # 2. 仅走代理的海外规则集与服务：下发 Fake-IP (198.18.x.x)
+  # 3. 未命中代理规则的其余流量：兜底全部下发真实 IP (real-ip)
   # ====================================================================
   fake-ip-filter-mode: rule
 
   fake-ip-filter:
+    # ---------------- 1. 基础直连保护（局域网、本地设备、系统检测、NTP） ----------------
+    - DOMAIN-SUFFIX,local,real-ip
+    - DOMAIN-SUFFIX,lan,real-ip
+    - DOMAIN-SUFFIX,localdomain,real-ip
+    - DOMAIN-SUFFIX,home.arpa,real-ip
+    - DOMAIN,localhost,real-ip
+    # Windows 网络连通性测试 (NCSI) 必须获取真实 IP，防止系统误报“无网络连接”或跳出热点登录窗
+    - DOMAIN,dns.msftncsi.com,real-ip
+    - DOMAIN,www.msftconnecttest.com,real-ip
+    - DOMAIN,msftconnecttest.com,real-ip
+    # NTP 时间同步协议
+    - DOMAIN-KEYWORD,ntp,real-ip
+    - DOMAIN-SUFFIX,pool.ntp.org,real-ip
+    - DOMAIN-SUFFIX,time.windows.com,real-ip
+    - DOMAIN-SUFFIX,time.apple.com,real-ip
+
+    # ---------------- 2. 走直连的服务与国内规则（获取国内真实最优 CDN IP） ----------------
+    # 微软大流量系统更新与商店下载（强制直连）
+    - GEOSITE,win-update,real-ip
+    # 微软常规服务与苹果服务（在 ACL4SS_Pro 中默认第一项是直接连接，国内 CDN 走直连满速）
+    - GEOSITE,microsoft,real-ip
+    - GEOSITE,apple,real-ip
+    # 本地下载与防吸血规则（强制直连，防止 P2P/BT 握手失败）
+    - RULE-SET,LocalDownload,real-ip
+    # 国内主流域名与 .cn 顶级域名
+    - GEOSITE,cn,real-ip
+    - DOMAIN-SUFFIX,cn,real-ip
+
+    # ---------------- 3. 需要代理的国外服务与规则集（下发 Fake-IP） ----------------
+    - RULE-SET,AIServices,fake-ip
+    - RULE-SET,ForeignPlus,fake-ip
+    - RULE-SET,Foreign,fake-ip
     - GEOSITE,google,fake-ip
     - GEOSITE,telegram,fake-ip
     - GEOSITE,netflix,fake-ip
     - GEOSITE,category-media,fake-ip
     - GEOSITE,gfw,fake-ip
-    - GEOSITE,geolocation-!cn,fake-ip
-    - GEOSITE,microsoft,fake-ip
-    - GEOSITE,apple,fake-ip
-    - RULE-SET,Foreign,fake-ip
-    - RULE-SET,ForeignPlus,fake-ip
-    - RULE-SET,AIServices,fake-ip
+
+    # ---------------- 4. 兜底规则（未命中代理规则的，全部下发真实 IP） ----------------
     - MATCH,real-ip
 
   # 基础引导解析：阿里与 Google 加密 DoT（纯 IP），保留阿里明文兜底
@@ -40,25 +71,34 @@ dns:
     - https://dns.google/dns-query
     - tls://8.8.8.8:853
 
-  # 国内真实 IP 解析：阿里主力（DoH + DoT），Google 加密备用
+  # 国内真实 IP 解析：阿里主力（DoH + DoT），腾讯备用
   nameserver:
     - https://dns.alidns.com/dns-query
     - tls://223.5.5.5:853
-    - https://dns.google/dns-query
-    - tls://8.8.8.8:853
+    - https://doh.pub/dns-query
+    - 223.5.5.5
 
   # 海外与代理域名的定向安全解析
   nameserver-policy:
-    # 🎯 广告拦截
+    # 🎯 广告拦截：直接拒答
     'geosite:category-ads-all': rcode://refused
     'rule-set:Block,BlockPlus': rcode://refused
 
-    # 🎯 微软更新特例：走阿里加密 DNS 获取国内满速 CDN
+    # 🎯 微软更新与国内直连服务：走阿里加密 DNS 获取国内满速真实 CDN
     'geosite:win-update':
       - https://dns.alidns.com/dns-query
       - tls://223.5.5.5:853
+    'geosite:microsoft':
+      - https://dns.alidns.com/dns-query
+      - tls://223.5.5.5:853
+    'geosite:apple':
+      - https://dns.alidns.com/dns-query
+      - tls://223.5.5.5:853
+    'geosite:cn':
+      - https://dns.alidns.com/dns-query
+      - tls://223.5.5.5:853
 
-    # 🎯 海外规则集：纯 Google + Cloudflare 双加密（DoH / DoT）
+    # 🎯 海外走代理的规则集：纯 Google + Cloudflare 双加密（DoH / DoT），彻底防止 DNS 污染
     'geosite:google':
       - https://dns.google/dns-query
       - https://cloudflare-dns.com/dns-query
@@ -79,22 +119,7 @@ dns:
       - https://cloudflare-dns.com/dns-query
       - tls://8.8.8.8:853
       - tls://1.1.1.1:853
-    'geosite:microsoft':
-      - https://dns.google/dns-query
-      - https://cloudflare-dns.com/dns-query
-      - tls://8.8.8.8:853
-      - tls://1.1.1.1:853
-    'geosite:apple':
-      - https://dns.google/dns-query
-      - https://cloudflare-dns.com/dns-query
-      - tls://8.8.8.8:853
-      - tls://1.1.1.1:853
     'geosite:gfw':
-      - https://dns.google/dns-query
-      - https://cloudflare-dns.com/dns-query
-      - tls://8.8.8.8:853
-      - tls://1.1.1.1:853
-    'geosite:geolocation-!cn':
       - https://dns.google/dns-query
       - https://cloudflare-dns.com/dns-query
       - tls://8.8.8.8:853
