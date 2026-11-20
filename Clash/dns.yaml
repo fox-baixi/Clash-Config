@@ -34,6 +34,8 @@ dns:
     - DOMAIN-SUFFIX,time.apple.com,real-ip
 
     # ---------------- 2. 走直连的服务与国内规则（获取国内真实最优 CDN IP） ----------------
+    # 排除github
+    - DOMAIN-KEYWORD,github,fake-ip
     # 微软大流量系统更新与商店下载（强制直连）
     - GEOSITE,win-update,real-ip
     # 微软常规服务与苹果服务（在 ACL4SS_Pro 中默认第一项是直接连接，国内 CDN 走直连满速）
